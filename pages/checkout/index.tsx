@@ -1,10 +1,10 @@
-import React, { Fragment, useEffect } from 'react'
 import { gql } from '@apollo/client'
 import { Elements } from '@stripe/react-stripe-js'
 import { loadStripe } from '@stripe/stripe-js'
 import { GetStaticProps } from 'next'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import React, { Fragment, useEffect } from 'react'
 
 import { CheckoutForm } from '../../components/CheckoutForm'
 import { Gutter } from '../../components/Gutter'

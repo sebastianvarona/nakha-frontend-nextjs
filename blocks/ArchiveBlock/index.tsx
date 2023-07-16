@@ -1,5 +1,4 @@
 import React from 'react'
-import { Cell, Grid } from '@faceless-ui/css-grid'
 
 import { CollectionArchive } from '../../components/CollectionArchive'
 import { Gutter } from '../../components/Gutter'
@@ -28,11 +27,7 @@ export const ArchiveBlock: React.FC<
     <div id={`block-${id}`} className={classes.archiveBlock}>
       {introContent && (
         <Gutter className={classes.introContent}>
-          <Grid>
-            <Cell cols={12} colsM={8}>
-              <RichText content={introContent} />
-            </Cell>
-          </Grid>
+          <RichText content={introContent} />
         </Gutter>
       )}
       <CollectionArchive
@@ -43,6 +38,7 @@ export const ArchiveBlock: React.FC<
         categories={categories}
         limit={limit}
         sort="-publishedDate"
+        showPageRange={populateBy === 'collection'}
       />
     </div>
   )

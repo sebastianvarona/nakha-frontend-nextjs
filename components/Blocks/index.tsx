@@ -1,19 +1,26 @@
 import React, { Fragment } from 'react'
 
 import { ArchiveBlock } from '../../blocks/ArchiveBlock'
+import { CTAWithImageBlock } from '../../blocks/CTAWithImage/index'
 import { CallToActionBlock } from '../../blocks/CallToAction'
 import { ContentBlock } from '../../blocks/Content'
+import { FeaturedProducts } from '../../blocks/FeaturedProducts/index'
+import { ImageContentCollageBlock } from '../../blocks/ImageContentCollage'
+import { InfoGrid } from '../../blocks/InfoGrid'
 import { MediaBlock } from '../../blocks/MediaBlock'
 import { Page } from '../../payload-types'
 import { toKebabCase } from '../../utilities/toKebabCase'
-import { BackgroundColor } from '../BackgroundColor'
 import { VerticalPadding, VerticalPaddingOptions } from '../VerticalPadding'
 
 const blockComponents = {
   cta: CallToActionBlock,
   content: ContentBlock,
   mediaBlock: MediaBlock,
+  imageContentCollage: ImageContentCollageBlock,
   archive: ArchiveBlock,
+  ctaWithImage: CTAWithImageBlock,
+  infoGrid: InfoGrid,
+  featuredProducts: FeaturedProducts,
 }
 
 export const Blocks: React.FC<{
@@ -32,28 +39,12 @@ export const Blocks: React.FC<{
 
           if (blockType && blockType in blockComponents) {
             const Block = blockComponents[blockType]
-            const backgroundColor = 'backgroundColor' in block ? block.backgroundColor : 'white'
-            const prevBlock = blocks[index - 1]
-            const nextBlock = blocks[index + 1]
 
-            const prevBlockBackground =
-              prevBlock?.[`${prevBlock.blockType}`]?.backgroundColor || 'white'
-            const nextBlockBackground =
-              nextBlock?.[`${nextBlock.blockType}`]?.backgroundColor || 'white'
-
-            let paddingTop: VerticalPaddingOptions = 'large'
-            let paddingBottom: VerticalPaddingOptions = 'large'
-
-            if (backgroundColor && backgroundColor === prevBlockBackground) {
-              paddingTop = 'medium'
-            }
-
-            if (backgroundColor && backgroundColor === nextBlockBackground) {
-              paddingBottom = 'medium'
-            }
+            let paddingTop: VerticalPaddingOptions = 'medium'
+            let paddingBottom: VerticalPaddingOptions = 'medium'
 
             if (index === blocks.length - 1) {
-              paddingBottom = 'large'
+              paddingBottom = 'medium'
             }
 
             if (disableTopPadding && index === 0) {
@@ -61,21 +52,19 @@ export const Blocks: React.FC<{
             }
 
             if (!disableTopPadding && index === 0) {
-              paddingTop = 'large'
+              paddingTop = 'medium'
             }
 
             if (Block) {
               return (
-                <BackgroundColor key={index} color={backgroundColor}>
-                  <VerticalPadding top={paddingTop} bottom={paddingBottom}>
-                    {/* @ts-ignore */}
-                    <Block
-                      // @ts-ignore
-                      id={toKebabCase(blockName)}
-                      {...block}
-                    />
-                  </VerticalPadding>
-                </BackgroundColor>
+                <VerticalPadding top={paddingTop} bottom={paddingBottom}>
+                  {/* @ts-ignore */}
+                  <Block
+                    // @ts-ignore
+                    id={toKebabCase(blockName)}
+                    {...block}
+                  />
+                </VerticalPadding>
               )
             }
           }

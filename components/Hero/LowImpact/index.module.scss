@@ -1,4 +1,23 @@
 @use '../../../css/type.scss' as *;
 
 .lowImpactHero {
+  text-align: center;
+  opacity: 0;
+  transition: opacity 1s ease;
+  background-color: var(--color-base-1000);
+  h1 {
+    display: inline-block;
+    margin-right: 10px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+}
+
+.visible {
+  opacity: 1;
+  h1 {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

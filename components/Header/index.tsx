@@ -1,14 +1,14 @@
-import React from 'react'
 import { ModalToggler } from '@faceless-ui/modal'
 import Link from 'next/link'
+import React, { useEffect, useState } from 'react'
 
 import { Header as HeaderType } from '../../payload-types'
 import { useAuth } from '../../providers/Auth'
 import { CartLink } from '../CartLink'
 import { Gutter } from '../Gutter'
-import { MenuIcon } from '../icons/Menu'
 import { CMSLink } from '../Link'
 import { Logo } from '../Logo'
+import { MenuIcon } from '../icons/Menu'
 import { MobileMenuModal, slug as menuModalSlug } from './MobileMenuModal'
 
 import classes from './index.module.scss'
@@ -16,27 +16,61 @@ import classes from './index.module.scss'
 export const Header: React.FC<{ header: HeaderType }> = ({ header }) => {
   const navItems = header?.navItems || []
   const { user } = useAuth()
+  const [scrollBackground, setScrollBackground] = React.useState(false)
+  const [isVisible, setIsVisible] = useState(false)
+  useEffect(() => {
+    setIsVisible(true)
+  }, [])
+
+  React.useEffect(() => {
+    const handleScroll = () => {
+      // Set the desired scroll position at which you want to change the background
+      const scrollThreshold = 200
+      const shouldChangeBackground = window.scrollY > scrollThreshold
+
+      setScrollBackground(shouldChangeBackground)
+    }
+
+    window.addEventListener('scroll', handleScroll)
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [])
 
   return (
     <>
-      <header className={classes.header}>
+      <header
+        className={`${classes.header} ${scrollBackground ? classes.scrollBackground : ''} ${
+          isVisible ? classes.visible : ''
+        }`}
+      >
         <Gutter className={classes.wrap}>
-          <Link href="/">
-            <Logo />
-          </Link>
-          <nav className={classes.nav}>
-            {navItems.map(({ link }, i) => {
-              return <CMSLink key={i} {...link} />
-            })}
-            {user && <Link href="/account">Account</Link>}
-            {!user && (
-              <React.Fragment>
-                <Link href="/login">Login</Link>
-                <Link href="/create-account">Create Account</Link>
-              </React.Fragment>
-            )}
-            <CartLink />
-          </nav>
+          <div className={classes.container}>
+            <nav className={classes.nav}>
+              {navItems.slice(0, 3).map(({ link }, i) => {
+                return <CMSLink key={i} {...link} />
+              })}
+            </nav>
+
+            <Link href="/">
+              <Logo color="white" />
+            </Link>
+
+            <nav className={`${classes.nav} ${classes.end}`}>
+              {navItems.slice(3).map(({ link }, i) => {
+                return <CMSLink key={i} {...link} />
+              })}
+              {user && <Link href="/account">Account</Link>}
+              {!user && (
+                <React.Fragment>
+                  <Link href="/login">Login</Link>
+                  <Link href="/create-account">Create Account</Link>
+                </React.Fragment>
+              )}
+              <CartLink />
+            </nav>
+          </div>
           <ModalToggler slug={menuModalSlug} className={classes.mobileMenuToggler}>
             <MenuIcon />
           </ModalToggler>

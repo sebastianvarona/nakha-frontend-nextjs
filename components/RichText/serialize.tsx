@@ -1,11 +1,12 @@
-import React, { Fragment } from 'react'
 import escapeHTML from 'escape-html'
+import React, { Fragment } from 'react'
 import { Text } from 'slate'
+
+import classes from './index.module.scss'
 
 import { Label } from '../Label'
 import { LargeBody } from '../LargeBody'
 
-// eslint-disable-next-line no-use-before-define
 type Children = Leaf[]
 
 type Leaf = {
@@ -61,17 +62,41 @@ const serialize = (children: Children): React.ReactElement[] =>
 
     switch (node.type) {
       case 'h1':
-        return <h1 key={i}>{serialize(node.children)}</h1>
+        return (
+          <h1 className={classes.heading} key={i}>
+            {serialize(node.children)}
+          </h1>
+        )
       case 'h2':
-        return <h2 key={i}>{serialize(node.children)}</h2>
+        return (
+          <h2 className={classes.heading} key={i}>
+            {serialize(node.children)}
+          </h2>
+        )
       case 'h3':
-        return <h3 key={i}>{serialize(node.children)}</h3>
+        return (
+          <h3 className={classes.heading} key={i}>
+            {serialize(node.children)}
+          </h3>
+        )
       case 'h4':
-        return <h4 key={i}>{serialize(node.children)}</h4>
+        return (
+          <h4 className={classes.heading} key={i}>
+            {serialize(node.children)}
+          </h4>
+        )
       case 'h5':
-        return <h5 key={i}>{serialize(node.children)}</h5>
+        return (
+          <h5 className={classes.heading} key={i}>
+            {serialize(node.children)}
+          </h5>
+        )
       case 'h6':
-        return <h6 key={i}>{serialize(node.children)}</h6>
+        return (
+          <h6 className={classes.heading} key={i}>
+            {serialize(node.children)}
+          </h6>
+        )
       case 'quote':
         return <blockquote key={i}>{serialize(node.children)}</blockquote>
       case 'ul':

@@ -1,4 +1,5 @@
-import React, { useState, createContext, useContext, useEffect, useCallback } from 'react'
+import React, { createContext, useCallback, useContext, useEffect, useState } from 'react'
+
 import { CART } from '../../graphql/cart'
 import { User } from '../../payload-types'
 
@@ -35,7 +36,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   // used to track the single event of logging in or logging out
   // useful for `useEffect` hooks that should only run once
-  const [status, setStatus] = useState<undefined | 'loggedOut' | 'loggedIn'>();
+  const [status, setStatus] = useState<undefined | 'loggedOut' | 'loggedIn'>()
 
   const create = useCallback<Create>(async args => {
     try {
@@ -61,7 +62,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         const { data, errors } = await res.json()
         if (errors) throw new Error(errors[0].message)
         setUser(data?.loginUser?.user)
-        setStatus('loggedIn');
+        setStatus('loggedIn')
       } else {
         throw new Error('Invalid login')
       }
@@ -98,7 +99,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         const { data, errors } = await res.json()
         if (errors) throw new Error(errors[0].message)
         setUser(data?.loginUser?.user)
-        setStatus('loggedIn');
+        setStatus('loggedIn')
         return data?.loginUser?.user
       }
 
@@ -125,7 +126,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
       if (res.ok) {
         setUser(null)
-        setStatus('loggedOut');
+        setStatus('loggedOut')
       } else {
         throw new Error('An error occurred while attempting to logout.')
       }

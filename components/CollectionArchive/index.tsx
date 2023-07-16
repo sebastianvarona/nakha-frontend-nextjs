@@ -1,7 +1,6 @@
-import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react'
 import { Cell, Grid } from '@faceless-ui/css-grid'
 import { useRouter } from 'next/router'
-import qs from 'qs'
+import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react'
 
 import type { ArchiveBlockProps } from '../../blocks/ArchiveBlock/types'
 import { Product } from '../../payload-types'
@@ -9,6 +8,7 @@ import { Card } from '../Card'
 import { Gutter } from '../Gutter'
 import { PageRange } from '../PageRange'
 
+import qs from 'qs'
 import classes from './index.module.scss'
 
 type Result = {
@@ -24,7 +24,7 @@ type Result = {
 
 export type Props = {
   className?: string
-  relationTo?: 'products'
+  relationTo?: 'products' | 'articles'
   populateBy?: 'collection' | 'selection'
   showPageRange?: boolean
   onResultChange?: (result: Result) => void // eslint-disable-line no-unused-vars
@@ -42,11 +42,12 @@ export const CollectionArchive: React.FC<Props> = props => {
     showPageRange,
     onResultChange,
     sort = '-createdAt',
-    limit = 10,
+    limit,
     populatedDocs,
     populatedDocsTotal,
     categories: catsFromProps,
   } = props
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
 
   const [results, setResults] = useState<Result>({
     totalDocs: typeof populatedDocsTotal === 'number' ? populatedDocsTotal : 0,
@@ -125,6 +126,23 @@ export const CollectionArchive: React.FC<Props> = props => {
       },
       { encode: false },
     )
+    // const searchParams = qs.stringify(
+    //   {
+    //     sort,
+    //     where: {
+    //       ...(selectedCategory
+    //         ? {
+    //             categories: {
+    //               in: [selectedCategory],
+    //             },
+    //           }
+    //         : {}),
+    //       // ...
+    //     },
+    //     // ...
+    //   },
+    //   { encode: false },
+    // )
 
     const makeRequest = async () => {
       try {
@@ -156,7 +174,18 @@ export const CollectionArchive: React.FC<Props> = props => {
     return () => {
       if (timer) clearTimeout(timer)
     }
-  }, [page, catsFromProps, catsFromQuery, relationTo, onResultChange, sort, limit])
+  }, [
+    page,
+    catsFromProps,
+    catsFromQuery,
+    relationTo,
+    onResultChange,
+    sort,
+    limit,
+    selectedCategory,
+  ])
+
+  const router = useRouter()
 
   return (
     <div className={[classes.collectionArchive, className].filter(Boolean).join(' ')}>
@@ -165,6 +194,54 @@ export const CollectionArchive: React.FC<Props> = props => {
       {!isLoading && error && <Gutter>{error}</Gutter>}
       {!isLoading && (
         <Fragment>
+          {catsFromProps.length > 0 && (
+            <Gutter>
+              <div className={classes.categories}>
+                <span
+                  className={selectedCategory === null ? classes.activeCategory : classes.category}
+                  onClick={() => {
+                    router.push(
+                      {
+                        pathname: router.pathname,
+                        query: {
+                          ...router.query,
+                          categories: undefined,
+                        },
+                      },
+                      undefined,
+                      { shallow: true },
+                    )
+                  }}
+                >
+                  All
+                </span>
+                {catsFromProps.map(cat => (
+                  <span
+                    key={cat.id}
+                    className={
+                      selectedCategory === cat.id ? classes.activeCategory : classes.category
+                    }
+                    onClick={() => {
+                      setSelectedCategory(cat.id)
+                      router.push(
+                        {
+                          pathname: router.pathname,
+                          query: {
+                            ...router.query,
+                            categories: cat.id,
+                          },
+                        },
+                        undefined,
+                        { shallow: true },
+                      )
+                    }}
+                  >
+                    {cat.title}
+                  </span>
+                ))}
+              </div>
+            </Gutter>
+          )}
           {showPageRange !== false && (
             <Gutter>
               <Grid>
@@ -186,7 +263,7 @@ export const CollectionArchive: React.FC<Props> = props => {
               {results.docs?.map((result, index) => {
                 return (
                   <Cell key={index} className={classes.row} cols={4} colsM={8}>
-                    <Card relationTo="products" doc={result} showCategories />
+                    <Card relationTo={relationTo} doc={result} showCategories />
                   </Cell>
                 )
               })}

@@ -1,5 +1,5 @@
-import React from 'react'
 import { GetStaticPaths, GetStaticProps } from 'next'
+import React from 'react'
 
 import { Blocks } from '../components/Blocks'
 import { Hero } from '../components/Hero'
@@ -19,10 +19,7 @@ const PageTemplate: React.FC<{
     return (
       <React.Fragment>
         <Hero {...hero} />
-        <Blocks
-          blocks={layout}
-          disableTopPadding={hero.type === 'none' || hero.type === 'lowImpact'}
-        />
+        <Blocks blocks={layout} disableTopPadding={hero.type === 'lowImpact'} />
       </React.Fragment>
     )
   }

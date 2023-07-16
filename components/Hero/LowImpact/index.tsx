@@ -1,23 +1,27 @@
-import React from 'react'
-import { Cell, Grid } from '@faceless-ui/css-grid'
+import React, { useEffect, useState } from 'react'
 
 import { Page } from '../../../payload-types'
-import { Gutter } from '../../Gutter'
 import RichText from '../../RichText'
 import { VerticalPadding } from '../../VerticalPadding'
 
+import { Gutter } from '../../Gutter'
 import classes from './index.module.scss'
 
 export const LowImpactHero: React.FC<Page['hero']> = ({ richText }) => {
+  const [isVisible, setIsVisible] = useState(false)
+
+  useEffect(() => {
+    setIsVisible(true)
+  }, [])
+
   return (
-    <Gutter className={classes.lowImpactHero}>
-      <Grid>
-        <Cell cols={8} colsL={10}>
-          <VerticalPadding>
-            <RichText className={classes.richText} content={richText} />
-          </VerticalPadding>
-        </Cell>
-      </Grid>
+    <Gutter>
+      <VerticalPadding
+        top="large"
+        className={`${classes.lowImpactHero} ${isVisible ? classes.visible : ''}`}
+      >
+        <RichText className={classes.richText} content={richText} />
+      </VerticalPadding>
     </Gutter>
   )
 }

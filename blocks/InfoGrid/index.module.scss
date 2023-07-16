@@ -1,0 +1,47 @@
+@use '../../css/queries.scss' as *;
+
+$spacer-h: calc(var(--block-padding) / 2);
+
+.infoGrid {
+  padding-left: $spacer-h;
+  padding-right: $spacer-h;
+  column-gap: 20px !important;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.imageContainer {
+  width: 100%;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+}
+
+.textContainer{
+  text-align: center;
+  h5, p {
+    margin: 0;
+  }
+  h5{
+    margin-bottom: 24px;
+    font-size: 18px;
+    line-height: 22px;
+  }
+  p{
+    font-size: 14px;
+    line-height: 24px;
+    color: var(--color-base-100);
+  }
+}

@@ -1,10 +1,12 @@
 .adminBar {
   z-index: 10;
   width: 100%;
-  background-color: var(--color-base-1000);
-  color: var(--color-white);
+  background-color: var(--color-base-850);
   padding: 5px 0;
   font-size: calc(#{var(--html-font-size)} * 1px);
+  position: fixed;
+  bottom: 0;
+  left: 0;
   display: none;
 }
 

@@ -1,25 +1,51 @@
 @import '../../../css/queries';
 
 .hero {
-  padding-top: calc(var(--gutter-h) / 2);
+  // padding-top: calc(var(--gutter-h) / 2);
   position: relative;
   overflow: hidden;
+  height: 100vh;
+  opacity: 0;
+  transition: opacity 1s ease;
+  background-color: var(--color-base-1000);
+  h1 {
+    display: inline-block;
+    margin-right: 10px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
 
-  @include mid-break {
-    padding-top: var(--gutter-h);
+  // @include mid-break {
+  //   padding-top: var(--gutter-h);
+  // }
+}
+.visible {
+  opacity: 1;
+  h1 {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
 .media {
-  width: calc(100% + var(--gutter-h));
-  margin-top: calc(var(--base) * 2);
-
-  @include mid-break {
-    margin-top: var(--base);
-    margin-left: calc(var(--gutter-h) * -1);
-    width: calc(100% + var(--gutter-h) * 2);
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-base-1000);
+  // width: calc(100% + var(--gutter-h));
+  // margin-top: calc(var(--base) * 2);
+  
+  // @include mid-break {
+    //   margin-top: var(--base);
+    //   margin-left: calc(var(--gutter-h) * -1);
+    //   width: calc(100% + var(--gutter-h) * 2);
+    // }
   }
-}
+  .video{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 
 .links {
   list-style: none;
@@ -44,5 +70,30 @@
 }
 
 .content {
-  position: relative;
+  position: absolute;
+  inset: 0;
+  width: 60%;
+  margin: auto;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 3;
+  text-align: center;
+
+  @include mid-break {
+    width: 100%;
+  }
+}
+
+.overlay {
+  background: rgb(0,0,0);
+  background: radial-gradient(circle, rgba(0,0,0,0.05), rgba(0,0,0,0.5), rgba(0,0,0,0.8));
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
 }

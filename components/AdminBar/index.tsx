@@ -1,12 +1,12 @@
-import React from 'react'
 import { PayloadAdminBar, PayloadAdminBarProps } from 'payload-admin-bar'
+import React from 'react'
 
 import { useAuth } from '../../providers/Auth'
 import { Gutter } from '../Gutter'
 
 import classes from './index.module.scss'
 
-const Title: React.FC = () => <span>My Store</span>
+const Title: React.FC = () => <span>Admin Dashboard</span>
 
 export const AdminBar: React.FC<{
   adminBarProps: PayloadAdminBarProps

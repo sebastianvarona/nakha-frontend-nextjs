@@ -1,7 +1,6 @@
-import React, { Fragment, useEffect, useState } from 'react'
 import Link from 'next/link'
+import React, { Fragment, useEffect, useState } from 'react'
 
-import { Product } from '../../payload-types'
 import { Media } from '../Media'
 import { Price } from '../Price'
 
@@ -35,16 +34,19 @@ export const Card: React.FC<{
   alignItems?: 'center'
   className?: string
   showCategories?: boolean
+  showDescription?: boolean
   hideImagesOnMobile?: boolean
   title?: string
-  relationTo?: 'products'
-  doc?: Product
+  relationTo?: 'products' | 'articles'
+  doc?: any
 }> = props => {
   const {
     showCategories,
+    showDescription,
+    relationTo,
     title: titleFromProps,
     doc,
-    doc: { slug, title, categories, meta, priceJSON } = {},
+    doc: { slug, title, categories, meta, priceJSON, layout } = {},
     className,
   } = props
 
@@ -53,7 +55,7 @@ export const Card: React.FC<{
   const hasCategories = categories && Array.isArray(categories) && categories.length > 0
   const titleToUse = titleFromProps || title
   const sanitizedDescription = description?.replace(/\s/g, ' ') // replace non-breaking space with white space
-  const href = `/products/${slug}`
+  const href = `/${relationTo}/${slug}`
 
   const [
     price, // eslint-disable-line no-unused-vars
@@ -64,47 +66,74 @@ export const Card: React.FC<{
     setPrice(priceFromJSON(priceJSON))
   }, [priceJSON])
 
-  return (
-    <div className={[classes.card, className].filter(Boolean).join(' ')}>
-      <Link href={href} className={classes.mediaWrapper}>
-        {!metaImage && <div className={classes.placeholder}>No image</div>}
-        {metaImage && typeof metaImage !== 'string' && (
-          <Media imgClassName={classes.image} resource={metaImage} fill />
-        )}
-      </Link>
-      {showCategories && hasCategories && (
-        <div className={classes.leader}>
-          {showCategories && hasCategories && (
-            <div>
-              {categories?.map((category, index) => {
-                const { title: titleFromCategory } = category
-
-                const categoryTitle = titleFromCategory || 'Untitled category'
-
-                const isLast = index === categories.length - 1
-
-                return (
-                  <Fragment key={index}>
-                    {categoryTitle}
-                    {!isLast && <Fragment>, &nbsp;</Fragment>}
-                  </Fragment>
-                )
-              })}
-            </div>
+  if (relationTo === 'products') {
+    return (
+      <div className={[classes.card, className].filter(Boolean).join(' ')}>
+        <Link href={href} className={`${classes.mediaWrapper} ${classes.mediaProductWrapper}`}>
+          {!metaImage && <div className={classes.placeholder}>No image</div>}
+          {metaImage && typeof metaImage !== 'string' && (
+            <Media imgClassName={classes.image} resource={metaImage} fill />
           )}
-        </div>
-      )}
-      {titleToUse && (
-        <h4 className={classes.title}>
-          <Link href={href}>{titleToUse}</Link>
-        </h4>
-      )}
-      {description && (
-        <div className={classes.body}>
-          {description && <p className={classes.description}>{sanitizedDescription}</p>}
-        </div>
-      )}
-      <Price product={doc} />
-    </div>
-  )
+        </Link>
+        {showCategories && hasCategories && (
+          <div className={classes.leader}>
+            {showCategories && hasCategories && (
+              <div className={classes.category}>
+                {categories?.map((category, index) => {
+                  const { title: titleFromCategory } = category
+
+                  const categoryTitle = titleFromCategory || 'Untitled category'
+
+                  const isLast = index === categories.length - 1
+
+                  return (
+                    <Fragment key={index}>
+                      {categoryTitle}
+                      {!isLast && <Fragment>, &nbsp;</Fragment>}
+                    </Fragment>
+                  )
+                })}
+              </div>
+            )}
+          </div>
+        )}
+        {titleToUse && (
+          <h4 className={classes.title}>
+            <Link href={href} className={classes.link}>
+              {titleToUse}
+            </Link>
+          </h4>
+        )}
+        {showDescription && description && (
+          <div className={classes.body}>
+            {description && <p className={classes.description}>{sanitizedDescription}</p>}
+          </div>
+        )}
+        {relationTo === 'products' && <Price product={doc} />}
+      </div>
+    )
+  } else {
+    const { description, image: metaImage } = meta || {}
+
+    return (
+      <div className={[classes.card, className].filter(Boolean).join(' ')}>
+        <Link href={href} className={`${classes.mediaWrapper} ${classes.mediaArticleWrapper}`}>
+          {!metaImage && <div className={classes.placeholder}>No image</div>}
+          {metaImage && typeof metaImage !== 'string' && (
+            <Media imgClassName={classes.image} resource={metaImage} fill />
+          )}
+        </Link>
+        {titleToUse && (
+          <h4 className={classes.title}>
+            <Link href={href}>{titleToUse}</Link>
+          </h4>
+        )}
+        {showDescription && description && (
+          <div className={classes.body}>
+            {description && <p className={classes.description}>{sanitizedDescription}</p>}
+          </div>
+        )}
+      </div>
+    )
+  }
 }

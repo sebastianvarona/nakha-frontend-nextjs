@@ -2,6 +2,8 @@
 @use './colors.scss' as *;
 @use './type.scss' as *;
 
+@import url("https://fonts.googleapis.com/css2?family=Quattrocento+Sans:wght@300;400;500;600;700&family=Quattrocento:wght@400;700&display=swap");
+
 :root {
   --breakpoint-xs-width : #{$breakpoint-xs-width};
   --breakpoint-s-width : #{$breakpoint-s-width};
@@ -10,7 +12,8 @@
   --scrollbar-width: 17px;
 
   --base: 24px;
-  --font-body: system-ui;
+  --font-body: 'Quattrocento-sans', system-ui;
+  --font-heading: 'Quattrocento', system-ui;
   --font-mono: 'Roboto Mono', monospace;
 
   --gutter-h: 180px;
@@ -18,6 +21,9 @@
 
   --header-z-index: 100;
   --modal-z-index: 90;
+
+  // Custom
+  --scale-factor: 1.05;
 
   @include large-break {
     --gutter-h: 144px;
@@ -40,7 +46,7 @@
 
 html {
   @extend %body;
-  background: var(--color-base-0);
+  background: var(--color-base-950);
   -webkit-font-smoothing: antialiased;
 }
 
@@ -52,7 +58,7 @@ body,
 
 body {
   font-family: var(--font-body);
-  color: var(--color-base-1000);
+  color: var(--color-base-0);
   margin: 0;
 }
 

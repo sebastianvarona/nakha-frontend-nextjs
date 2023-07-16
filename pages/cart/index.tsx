@@ -1,6 +1,6 @@
-import React, { Fragment } from 'react'
 import { GetStaticProps } from 'next'
 import Link from 'next/link'
+import React, { Fragment } from 'react'
 
 import { Blocks } from '../../components/Blocks'
 import { Button } from '../../components/Button'
@@ -142,6 +142,7 @@ export const getStaticProps: GetStaticProps = async () => {
       slug: 'cart',
     },
   })
+  console.log('data', data)
 
   if (!data.Pages.docs[0]) {
     return {

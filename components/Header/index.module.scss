@@ -3,6 +3,16 @@
 .header {
   padding: var(--base) 0;
   z-index: var(--header-z-index);
+  height: 80px;
+  inset: 0;
+  position: absolute;
+  opacity: 0;
+  transform: translateY(-80px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.visible {
+  transform: translateY(0);
+  opacity: 1;
 }
 
 .wrap {
@@ -24,6 +34,22 @@
   }
 }
 
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+
+  nav {
+    flex: 1 1 0%;
+  }
+  .end{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+}
+
 .mobileMenuToggler {
   all: unset;
   cursor: pointer;
@@ -36,4 +62,15 @@
   @include mid-break {
     display: block;
   }
+}
+
+// Scrolled header
+.scrollBackground {
+  background-color: rgba(0, 0, 0, 0.9);
+  position: fixed;
+  // Animate entry
+  top: -80px;
+  transition: transform 0.3s ease-in-out;
+  transform: translateY(80px);
+  backdrop-filter: blur(12px);
 }

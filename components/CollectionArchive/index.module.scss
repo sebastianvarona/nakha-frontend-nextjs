@@ -51,3 +51,43 @@
     margin-top: var(--base);
   }
 }
+
+.category {
+  cursor: pointer;
+  background-color: var(--color-base-1000);
+  color: var(--color-base-500);
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: 10px;
+  margin-bottom: calc(var(--base) * 2);
+  &:hover {
+    background-color: var(--color-base-900);
+    color: var(--color-base-300);
+  }
+
+  @include mid-break {
+    margin-bottom: var(--base);
+  }
+}
+
+.activeCategory {
+  cursor: pointer;
+  background-color: var(--color-base-850);
+  color: var(--color-base-0);
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: 10px;
+  margin-bottom: calc(var(--base) * 2);
+  &:hover {
+    background-color: var(--color-base-800);
+  }
+
+  @include mid-break {
+    margin-bottom: var(--base);
+  }
+}
+

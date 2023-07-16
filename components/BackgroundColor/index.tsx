@@ -4,7 +4,7 @@ import classes from './index.module.scss'
 
 export type BackgroundColorType = 'white' | 'black'
 
-export const BackgroundColorContext = createContext<BackgroundColorType>('white')
+export const BackgroundColorContext = createContext<BackgroundColorType>('black')
 
 export const useBackgroundColor = (): BackgroundColorType => useContext(BackgroundColorContext)
 

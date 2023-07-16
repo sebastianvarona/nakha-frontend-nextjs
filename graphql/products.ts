@@ -1,8 +1,9 @@
-import { gql } from "@apollo/client";
-import { ARCHIVE_BLOCK, CALL_TO_ACTION, CONTENT, MEDIA_BLOCK } from "./blocks";
-import { CATEGORIES } from "./categories";
-import { HEADER, FOOTER, SETTINGS } from "./globals";
-import { META } from "./meta";
+import { gql } from '@apollo/client'
+
+import { CALL_TO_ACTION, CONTENT, MEDIA_BLOCK } from './blocks'
+import { CATEGORIES } from './categories'
+import { FOOTER, HEADER, SETTINGS } from './globals'
+import { META } from './meta'
 
 export const PRODUCTS = gql`
   query Products {
@@ -25,13 +26,11 @@ export const PRODUCT = gql`
           ${CALL_TO_ACTION}
           ${CONTENT}
           ${MEDIA_BLOCK}
-          ${ARCHIVE_BLOCK}
         }
         paywall {
           ${CALL_TO_ACTION}
           ${CONTENT}
           ${MEDIA_BLOCK}
-          ${ARCHIVE_BLOCK}
         }
         priceJSON
         ${META}
