@@ -2,6 +2,7 @@ import React, { useCallback } from 'react'
 import { GridProvider } from '@faceless-ui/css-grid'
 import { ModalContainer, ModalProvider } from '@faceless-ui/modal'
 import { AppProps } from 'next/app'
+import Head from 'next/head'
 import { useRouter } from 'next/router'
 
 import { AdminBar } from '../components/AdminBar'
@@ -41,6 +42,12 @@ const PayloadApp = (
 
   return (
     <AuthProvider>
+      <Head>
+        <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png" />
+        <link rel="manifest" href="/favicon/site.webmanifest" />
+      </Head>
       <CartProvider>
         <GridProvider
           breakpoints={{
