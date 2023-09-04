@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
 import { Product } from '../../payload-types'
-import { RemoveFromCartButton } from '../RemoveFromCartButton'
 
 import classes from './index.module.scss'
 
@@ -50,10 +49,11 @@ export const Price: React.FC<{
   return (
     <div className={classes.actions}>
       {typeof price !== 'undefined' && price !== '' && <p className={classes.price}>{price}</p>}
+
       {/* {button && button === 'addToCart' && (
-        <AddToCartButton product={product} appearance="primary" />
-      )} */}
-      {button && button === 'removeFromCart' && <RemoveFromCartButton product={product} />}
+        <AddToCartButton product={product} appearance="secondary" />
+      )}
+      {button && button === 'removeFromCart' && <RemoveFromCartButton product={product} />} */}
     </div>
   )
 }

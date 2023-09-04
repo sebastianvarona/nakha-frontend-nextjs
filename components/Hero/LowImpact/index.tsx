@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 
 import { Page } from '../../../payload-types'
+import { Gutter } from '../../Gutter'
 import RichText from '../../RichText'
 import { VerticalPadding } from '../../VerticalPadding'
 
-import { Gutter } from '../../Gutter'
 import classes from './index.module.scss'
 
 export const LowImpactHero: React.FC<Page['hero']> = ({ richText }) => {
@@ -18,6 +18,7 @@ export const LowImpactHero: React.FC<Page['hero']> = ({ richText }) => {
     <Gutter>
       <VerticalPadding
         top="large"
+        bottom="none"
         className={`${classes.lowImpactHero} ${isVisible ? classes.visible : ''}`}
       >
         <RichText className={classes.richText} content={richText} />

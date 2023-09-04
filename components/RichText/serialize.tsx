@@ -1,11 +1,11 @@
-import escapeHTML from 'escape-html'
 import React, { Fragment } from 'react'
+import escapeHTML from 'escape-html'
 import { Text } from 'slate'
-
-import classes from './index.module.scss'
 
 import { Label } from '../Label'
 import { LargeBody } from '../LargeBody'
+
+import classes from './index.module.scss'
 
 type Children = Leaf[]
 

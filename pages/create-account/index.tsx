@@ -7,11 +7,13 @@ import Link from 'next/link'
 import { Button } from '../../components/Button'
 import { Gutter } from '../../components/Gutter'
 import { Input } from '../../components/Input'
+import { VerticalPadding } from '../../components/VerticalPadding'
 import { getApolloClient } from '../../graphql'
 import { FOOTER, HEADER, SETTINGS } from '../../graphql/globals'
 import { User } from '../../payload-types'
 import { useAuth } from '../../providers/Auth'
-import classes from './index.module.css'
+
+import classes from './index.module.scss'
 
 type FormData = Partial<
   User & {
@@ -57,52 +59,54 @@ const CreateAccount: React.FC = () => {
   )
 
   return (
-    <Gutter className={classes.createAccount}>
-      {!success && (
-        <React.Fragment>
-          <h1>Create Account</h1>
-          {error && <div className={classes.error}>{error}</div>}
-          <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
-            <Input
-              name="email"
-              label="Email Address"
-              required
-              register={register}
-              error={errors.email}
-            />
-            <Input
-              name="password"
-              type="password"
-              label="Password"
-              required
-              register={register}
-              error={errors.password}
-            />
-            <Input
-              name="passwordConfirm"
-              type="password"
-              label="Confirm Password"
-              required
-              register={register}
-              error={errors.passwordConfirm}
-            />
-            <Input name="name" label="Name" required register={register} error={errors.name} />
-            <Button type="submit" label="Create account" appearance="primary" />
-          </form>
-          <Fragment>
-            {'Already have an account? '}
-            <Link href="/login">Login</Link>
-          </Fragment>
-        </React.Fragment>
-      )}
-      {success && (
-        <React.Fragment>
-          <h1>Account created successfully</h1>
-          <p>You are now logged in.</p>
-          <Link href="/account">Go to your account</Link>
-        </React.Fragment>
-      )}
-    </Gutter>
+    <VerticalPadding top="header" bottom="none">
+      <Gutter className={classes.createAccount}>
+        {!success && (
+          <React.Fragment>
+            <h1>Create Account</h1>
+            {error && <div className={classes.error}>{error}</div>}
+            <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
+              <Input
+                name="email"
+                label="Email Address"
+                required
+                register={register}
+                error={errors.email}
+              />
+              <Input
+                name="password"
+                type="password"
+                label="Password"
+                required
+                register={register}
+                error={errors.password}
+              />
+              <Input
+                name="passwordConfirm"
+                type="password"
+                label="Confirm Password"
+                required
+                register={register}
+                error={errors.passwordConfirm}
+              />
+              <Input name="name" label="Name" required register={register} error={errors.name} />
+              <Button type="submit" label="Create account" appearance="primary" />
+            </form>
+            <Fragment>
+              {'Already have an account? '}
+              <Link href="/login">Login</Link>
+            </Fragment>
+          </React.Fragment>
+        )}
+        {success && (
+          <React.Fragment>
+            <h1>Account created successfully</h1>
+            <p>You are now logged in.</p>
+            <Link href="/account">Go to your account</Link>
+          </React.Fragment>
+        )}
+      </Gutter>
+    </VerticalPadding>
   )
 }
 

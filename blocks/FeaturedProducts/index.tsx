@@ -23,7 +23,6 @@ export const FeaturedProducts: React.FC<
       <Gutter>
         <Grid className={classes.grid}>
           {selectedProducts?.map((product, index) => {
-            console.log(product.value)
             return (
               <Cell key={index} className={classes.row} cols={4} colsM={8}>
                 <Card relationTo={'products'} doc={product.value} showDescription={false} />

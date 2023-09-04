@@ -1,12 +1,22 @@
 .login {
   margin-bottom: var(--block-padding);
+    h1 {
+      font-size: var(--small-title-size);
+    }
 }
 
 .form {
   margin-bottom: var(--base);
+  button {
+    margin-top: var(--base);
+  }
 }
 
 .error {
   color: red;
   margin-bottom: var(--base);
+}
+
+.top{
+  text-align: center;
 }

@@ -14,15 +14,21 @@ export const Footer: React.FC<{ footer: FooterType }> = ({ footer }) => {
   return (
     <footer className={classes.footer}>
       <Gutter className={classes.wrap}>
-        <Link href="/">
-          <Logo color="white" />
-        </Link>
+        <div className={classes.leftCol}>
+          <p className={classes.text}>
+            © {new Date().getFullYear()} <span className={classes.name}>NAKHA ®</span>.{' '}
+            {footer?.copyright || ''}
+          </p>
+        </div>
+        <div className={classes.logo}>
+          <Link href="/">
+            <Logo color="white" />
+          </Link>
+        </div>
         <nav className={classes.nav}>
           {navItems.map(({ link }, i) => {
             return <CMSLink key={i} {...link} />
           })}
-          <Link href="https://github.com/payloadcms/ecommere-example-website">Source code</Link>
-          <Link href="https://github.com/payloadcms/payload">Payload</Link>
         </nav>
       </Gutter>
     </footer>

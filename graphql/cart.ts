@@ -1,10 +1,11 @@
-import { META } from "./meta";
+import { META } from './meta'
 
 export const CART = `cart {
   items {
     product {
       id
       slug
+      title
       priceJSON
       ${META}
     }

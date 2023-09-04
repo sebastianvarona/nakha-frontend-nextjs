@@ -1,6 +1,7 @@
+import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react'
 import { Cell, Grid } from '@faceless-ui/css-grid'
 import { useRouter } from 'next/router'
-import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react'
+import qs from 'qs'
 
 import type { ArchiveBlockProps } from '../../blocks/ArchiveBlock/types'
 import { Product } from '../../payload-types'
@@ -8,7 +9,6 @@ import { Card } from '../Card'
 import { Gutter } from '../Gutter'
 import { PageRange } from '../PageRange'
 
-import qs from 'qs'
 import classes from './index.module.scss'
 
 type Result = {
@@ -263,7 +263,12 @@ export const CollectionArchive: React.FC<Props> = props => {
               {results.docs?.map((result, index) => {
                 return (
                   <Cell key={index} className={classes.row} cols={4} colsM={8}>
-                    <Card relationTo={relationTo} doc={result} showCategories />
+                    <Card
+                      relationTo={relationTo}
+                      doc={result}
+                      showCategories
+                      showDescription={relationTo === 'articles'}
+                    />
                   </Cell>
                 )
               })}

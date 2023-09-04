@@ -24,6 +24,8 @@
 
   // Custom
   --scale-factor: 1.05;
+  --header-height: 100px;
+  --small-title-size: 2.5rem;
 
   @include large-break {
     --gutter-h: 144px;
@@ -46,7 +48,7 @@
 
 html {
   @extend %body;
-  background: var(--color-base-950);
+  background: var(--color-base-1000);
   -webkit-font-smoothing: antialiased;
 }
 

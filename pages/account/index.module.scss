@@ -1,9 +1,19 @@
 .account {
   margin-bottom: var(--block-padding);
+  h1 {
+    font-size: var(--small-title-size);
+    text-align: center;
+  }
+  h2 {
+    font-size: 2.0rem;
+  }
 }
 
 .form {
   margin-bottom: var(--base);
+  button {
+    margin-top: 28px;
+  }
 }
 
 .success,
@@ -22,4 +32,5 @@
 .hr {
   margin: calc(var(--block-padding) / 2) 0;
   background-color: var(--color-base-900);
+  opacity: 0.2;
 }

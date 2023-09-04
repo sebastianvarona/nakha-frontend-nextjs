@@ -2,4 +2,29 @@
 
 .confirmationPage {
   margin-bottom: var(--block-padding);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  h1 {
+    font-size: var(--small-title-size);
+    text-align: center;
+  }
+}
+
+.message {
+  text-align: center;
+  padding: 80px;
+  font-size: x-large;
+}
+
+.success {
+  background-color: var(--color-success-850);
+}
+
+.failure {
+  background-color: var(--color-error-850);
+}
+
+.proccesing {
+  background-color: var(--color-warning-850);
 }

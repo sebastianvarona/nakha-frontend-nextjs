@@ -4,6 +4,7 @@ import { GetStaticProps } from 'next'
 import Link from 'next/link'
 
 import { Gutter } from '../../components/Gutter'
+import { VerticalPadding } from '../../components/VerticalPadding'
 import { getApolloClient } from '../../graphql'
 import { FOOTER, HEADER, SETTINGS } from '../../graphql/globals'
 import { Settings } from '../../payload-types'
@@ -35,29 +36,31 @@ const Logout: React.FC<{
   }, [logout])
 
   return (
-    <Gutter className={classes.logout}>
-      {success && (
-        <div>
-          <h1>{success}</h1>
-          <p>
-            {'What would you like to do next? '}
-            {typeof shopPage === 'object' && shopPage?.slug && (
+    <VerticalPadding top="header">
+      <Gutter className={classes.logout}>
+        {success && (
+          <div>
+            <h1>{success}</h1>
+            <p>
+              {'What would you like to do next? '}
+              {typeof shopPage === 'object' && shopPage?.slug && (
+                <Fragment>
+                  {' '}
+                  <Link href={`/${shopPage.slug}`}>Click here</Link>
+                  {` to shop.`}
+                </Fragment>
+              )}
               <Fragment>
-                {' '}
-                <Link href={`/${shopPage.slug}`}>Click here</Link>
-                {` to shop.`}
+                {' To log back in, '}
+                <Link href={`/login?redirect=%2Fcart`}>click here</Link>
+                {'.'}
               </Fragment>
-            )}
-            <Fragment>
-              {' To log back in, '}
-              <Link href={`/login?redirect=%2Fcart`}>click here</Link>
-              {'.'}
-            </Fragment>
-          </p>
-        </div>
-      )}
-      {error && <div className={classes.error}>{error}</div>}
-    </Gutter>
+            </p>
+          </div>
+        )}
+        {error && <div className={classes.error}>{error}</div>}
+      </Gutter>
+    </VerticalPadding>
   )
 }
 

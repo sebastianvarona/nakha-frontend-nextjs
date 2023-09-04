@@ -3,11 +3,11 @@ import { Cell, Grid } from '@faceless-ui/css-grid'
 
 import { Product } from '../../../payload-types'
 import { AddToCartButton } from '../../AddToCartButton'
-import { BackgroundColor } from '../../BackgroundColor'
 import { Gutter } from '../../Gutter'
 import { Media } from '../../Media'
 import { Price } from '../../Price'
 import RichText from '../../RichText'
+import { VerticalPadding } from '../../VerticalPadding'
 
 import classes from './index.module.scss'
 
@@ -21,10 +21,10 @@ export const ProductHero: React.FC<{
   } = product
 
   return (
-    <Gutter className={classes.productHero}>
-      <BackgroundColor color="white">
+    <VerticalPadding top="large">
+      <Gutter className={classes.productHero}>
         <Grid>
-          <Cell cols={5} colsM={8}>
+          <Cell cols={6}>
             <div className={classes.content}>
               <div className={classes.categories}>
                 {categories?.map((category, index) => {
@@ -45,12 +45,17 @@ export const ProductHero: React.FC<{
               <h1 className={classes.title}>{title}</h1>
               {description && <p className={classes.description}>{description}</p>}
               <Price product={product} button={false} />
-              <AddToCartButton product={product} className={classes.addToCartButton} />
+              <AddToCartButton
+                product={product}
+                className={classes.addToCartButton}
+                appearance="primary"
+              />
             </div>
           </Cell>
-          <Cell cols={7} colsM={8}>
+          <Cell cols={6}>
             <div className={classes.mediaWrapper}>
               {!metaImage && <div className={classes.placeholder}>No image</div>}
+              <div className={classes.overlay} />
               {metaImage && typeof metaImage !== 'string' && (
                 <Media imgClassName={classes.image} resource={metaImage} fill />
               )}
@@ -60,7 +65,7 @@ export const ProductHero: React.FC<{
             )}
           </Cell>
         </Grid>
-      </BackgroundColor>
-    </Gutter>
+      </Gutter>
+    </VerticalPadding>
   )
 }

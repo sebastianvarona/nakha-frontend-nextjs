@@ -1,7 +1,15 @@
-import React, { createContext, useContext, useCallback, useState, useEffect, useReducer, use, useRef } from 'react';
-import { Product, User } from '../../payload-types';
-import { useAuth } from '../Auth';
-import { CartItem, cartReducer } from './reducer';
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useReducer,
+  useRef,
+  useState,
+} from 'react'
+import { Product, User } from '../../payload-types'
+import { useAuth } from '../Auth'
+import { CartItem, cartReducer } from './reducer'
 // import { useNotifications } from '../Notifications';
 
 export type CartContext = {
@@ -10,18 +18,18 @@ export type CartContext = {
   deleteItemFromCart: (product: Product) => void
   cartIsEmpty: boolean | undefined
   clearCart: () => void
-  isProductInCart: (product: Product) => boolean,
+  isProductInCart: (product: Product) => boolean
   cartTotal: {
     formatted: string
     raw: number
   }
 }
 
-const Context = createContext({} as CartContext);
+const Context = createContext({} as CartContext)
 
-export const useCart = () => useContext(Context);
+export const useCart = () => useContext(Context)
 
-const arrayHasItems = (array) => Array.isArray(array) && array.length > 0;
+const arrayHasItems = array => Array.isArray(array) && array.length > 0
 
 // Step 1: Check local storage for a cart
 // Step 2: If there is a cart, fetch the products and hydrate the cart
@@ -30,56 +38,60 @@ const arrayHasItems = (array) => Array.isArray(array) && array.length > 0;
 // Step 4B: Sync the cart to Payload and clear local storage
 // Step 5: If the user is logged out, sync the cart to local storage only
 
-export const CartProvider = (props) => {
+export const CartProvider = props => {
   // const { setTimedNotification } = useNotifications();
-  const { children } = props;
-  const { user, status: authStatus } = useAuth();
+  const { children } = props
+  const { user, status: authStatus } = useAuth()
 
   const [cart, dispatchCart] = useReducer(cartReducer, {
-    items: []
-  });
+    items: [],
+  })
 
   const [total, setTotal] = useState<{
     formatted: string
     raw: number
   }>({
     formatted: '0.00',
-    raw: 0
-  });
+    raw: 0,
+  })
 
   const [cartIsEmpty, setCartIsEmpty] = useState<boolean>()
-  const hasInitialized = useRef(false);
+  const hasInitialized = useRef(false)
 
   // Check local storage for a cart
   // If there is a cart, fetch the products and hydrate the cart
   useEffect(() => {
     if (!hasInitialized.current) {
-      hasInitialized.current = true;
+      hasInitialized.current = true
       const syncCartFromLocalStorage = async () => {
-        const localCart = localStorage.getItem('cart');
+        const localCart = localStorage.getItem('cart')
 
         if (localCart) {
-          const parsedCart = JSON.parse(localCart);
+          const parsedCart = JSON.parse(localCart)
           if (parsedCart.items && parsedCart.items.length > 0) {
-            const initialCart = await Promise.all(parsedCart.items.map(async ({ product, quantity }) => {
-              const res = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL}/api/products/${product}`);
-              const data = await res.json();
-              return {
-                product: data,
-                quantity
-              };
-            }));
+            const initialCart = await Promise.all(
+              parsedCart.items.map(async ({ product, quantity }) => {
+                const res = await fetch(
+                  `${process.env.NEXT_PUBLIC_CMS_URL}/api/products/${product}`,
+                )
+                const data = await res.json()
+                return {
+                  product: data,
+                  quantity,
+                }
+              }),
+            )
 
             dispatchCart({
               type: 'SET_CART',
               payload: {
-                items: initialCart
-              }
+                items: initialCart,
+              },
             })
           }
         }
       }
-      syncCartFromLocalStorage();
+      syncCartFromLocalStorage()
     }
   }, [])
 
@@ -92,14 +104,14 @@ export const CartProvider = (props) => {
       // merge the user's cart with the local state upon logging in
       dispatchCart({
         type: 'MERGE_CART',
-        payload: user.cart
+        payload: user.cart,
       })
     }
 
     if (authStatus === 'loggedOut') {
       // clear the cart from local state after logging out
       dispatchCart({
-        type: 'CLEAR_CART'
+        type: 'CLEAR_CART',
       })
     }
   }, [user, authStatus])
@@ -112,12 +124,12 @@ export const CartProvider = (props) => {
 
     const flattenedCart = {
       ...cart,
-      items: cart.items?.map((item) => ({
+      items: cart.items?.map(item => ({
         ...item,
         // flatten relationship to product
-        product: typeof item.product === 'string' ? item.product : item.product.id
-      }))
-    };
+        product: typeof item.product === 'string' ? item.product : item.product.id,
+      })),
+    }
 
     if (user) {
       try {
@@ -127,7 +139,7 @@ export const CartProvider = (props) => {
             credentials: 'include',
             method: 'PATCH',
             body: JSON.stringify({
-              cart: flattenedCart
+              cart: flattenedCart,
             }),
             headers: {
               'Content-Type': 'application/json',
@@ -135,7 +147,7 @@ export const CartProvider = (props) => {
           })
 
           if (req.ok) {
-            localStorage.setItem('cart', '[]');
+            localStorage.setItem('cart', '[]')
           }
         }
 
@@ -144,58 +156,72 @@ export const CartProvider = (props) => {
         console.error('Error while syncing cart to Payload.')
       }
     } else {
-      localStorage.setItem('cart', JSON.stringify(flattenedCart));
+      localStorage.setItem('cart', JSON.stringify(flattenedCart))
     }
   }, [user, cart])
 
-  const isProductInCart = useCallback((incomingProduct: Product): boolean => {
-    let isInCart = false;
-    const { items: itemsInCart } = cart;
-    if (Array.isArray(itemsInCart) && itemsInCart.length > 0) {
-      isInCart = Boolean(itemsInCart.find(({ product }) => typeof product === 'string' ? product === incomingProduct.id : product.id === incomingProduct.id));
-    }
-    return isInCart;
-  }, [cart]);
+  const isProductInCart = useCallback(
+    (incomingProduct: Product): boolean => {
+      let isInCart = false
+      const { items: itemsInCart } = cart
+      if (Array.isArray(itemsInCart) && itemsInCart.length > 0) {
+        isInCart = Boolean(
+          itemsInCart.find(({ product }) =>
+            typeof product === 'string'
+              ? product === incomingProduct.id
+              : product.id === incomingProduct.id,
+          ),
+        )
+      }
+      return isInCart
+    },
+    [cart],
+  )
 
   // this method can be used to add new items AND update existing ones
-  const addItemToCart = useCallback((incomingItem) => {
+  const addItemToCart = useCallback(incomingItem => {
     dispatchCart({
       type: 'ADD_ITEM',
-      payload: incomingItem
+      payload: incomingItem,
     })
-  }, []);
+  }, [])
 
   const deleteItemFromCart = useCallback((incomingProduct: Product) => {
-   dispatchCart({
+    dispatchCart({
       type: 'DELETE_ITEM',
-      payload: incomingProduct
-   })
-  }, []);
+      payload: incomingProduct,
+    })
+  }, [])
 
   const clearCart = useCallback(() => {
     dispatchCart({
-      type: 'CLEAR_CART'
+      type: 'CLEAR_CART',
     })
-  }, []);
+  }, [])
 
   // calculate the new cart total whenever the cart changes
   useEffect(() => {
     if (!hasInitialized) return
-    const isEmpty = !arrayHasItems(cart.items);
-    setCartIsEmpty(isEmpty);
+    const isEmpty = !arrayHasItems(cart.items)
+    setCartIsEmpty(isEmpty)
 
     const newTotal = cart.items.reduce((acc, item) => {
-      return acc + (typeof item.product === 'object' ? JSON.parse(item.product.priceJSON)?.data?.[0]?.unit_amount * item.quantity : 0)
-    }, 0);
+      return (
+        acc +
+        (typeof item.product === 'object'
+          ? JSON.parse(item.product.priceJSON)?.data?.[0]?.unit_amount * item.quantity
+          : 0)
+      )
+    }, 0)
 
     setTotal({
       formatted: (newTotal / 100).toLocaleString('en-US', {
         style: 'currency',
         currency: 'USD',
       }),
-      raw: newTotal
+      raw: newTotal,
     })
-  }, [cart, hasInitialized]);
+  }, [cart, hasInitialized])
 
   return (
     <Context.Provider
@@ -206,10 +232,10 @@ export const CartProvider = (props) => {
         cartIsEmpty,
         clearCart,
         isProductInCart,
-        cartTotal: total
+        cartTotal: total,
       }}
     >
-      { children && children}
+      {children && children}
     </Context.Provider>
-  );
-};
+  )
+}

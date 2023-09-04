@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -6,6 +6,8 @@ import { useRouter } from 'next/router'
 import { Button } from '../../../components/Button'
 import { Gutter } from '../../../components/Gutter'
 import { Media } from '../../../components/Media'
+import { Price } from '../../../components/Price'
+import { VerticalPadding } from '../../../components/VerticalPadding'
 import { getApolloClient } from '../../../graphql'
 import { HEADER_QUERY } from '../../../graphql/globals'
 import { Order as OrderType } from '../../../payload-types'
@@ -21,6 +23,13 @@ const Order: React.FC = () => {
   const router = useRouter()
   const { query } = router
   const [order, setOrder] = useState<OrderType>()
+  const [total, setTotal] = useState<{
+    formatted: string
+    raw: number
+  }>({
+    formatted: '0.00',
+    raw: 0,
+  })
 
   useEffect(() => {
     setLoading(true)
@@ -49,62 +58,88 @@ const Order: React.FC = () => {
     }
   }, [user, router])
 
+  useEffect(() => {
+    if (order) {
+      const newTotal = order?.items?.reduce((acc, item) => {
+        return (
+          acc +
+          (typeof item.product === 'object'
+            ? JSON.parse(item.product.priceJSON)?.data?.[0]?.unit_amount * item.quantity
+            : 0)
+        )
+      }, 0)
+
+      setTotal({
+        formatted: (newTotal / 100).toLocaleString('en-US', {
+          style: 'currency',
+          currency: 'USD',
+        }),
+        raw: newTotal,
+      })
+    }
+  }, [order])
+
   return (
-    <Gutter className={classes.orders}>
-      <h1>Order</h1>
-      <p>{`Order ID: ${query.id}`}</p>
-      {error && <div className={classes.error}>{error}</div>}
-      {loading && <div className={classes.loading}>{`Loading order ${query.id}...`}</div>}
-      {order && (
-        <div className={classes.order}>
-          <h4 className={classes.orderTitle}>Items</h4>
-          {order.items?.map((item, index) => {
-            let product
+    <VerticalPadding top="header" bottom="none">
+      <Gutter className={classes.orders}>
+        <h1>Order</h1>
+        <p>{`Order ID: ${query.id}`}</p>
+        {error && <div className={classes.error}>{error}</div>}
+        {loading && <div className={classes.loading}>{`Loading order ${query.id}...`}</div>}
+        {order && (
+          <div className={classes.order}>
+            <h4 className={classes.orderTitle}>Items</h4>
+            {order.items.map((item, index) => {
+              if (typeof item.product === 'object') {
+                const {
+                  quantity,
+                  product,
+                  product: {
+                    title,
+                    meta: { image: metaImage },
+                  },
+                } = item
 
-            if (typeof item.product === 'object') {
-              product = item.product
-            }
+                const isLast = index === order.items.length - 1
 
-            const isLast = index === order.items.length - 1
-
-            return (
-              <ul className={classes.itemsList} key={index}>
-                <li className={classes.item}>
-                  <div className={classes.row}>
-                    <div className={classes.mediaWrapper}>
-                      {!product.meta.image && <span className={classes.placeholder}>No image</span>}
-                      {product.meta.image && typeof product.meta.image !== 'string' && (
-                        <Media imgClassName={classes.image} resource={product.meta.image} fill />
-                      )}
-                    </div>
-                    <div className={classes.rowContent}>
-                      <Link href={`/products/${product.slug}`}>
-                        <h6 className={classes.title}>{product.title}</h6>
-                      </Link>
-                      <div>{`Quantity ${item.quantity}`}</div>
-                      <div>
-                        {/* TODO: get actual price */}
-                        {`Price: $${0}`}
+                return (
+                  <Fragment key={index}>
+                    <div className={classes.row}>
+                      <div className={classes.mediaWrapper}>
+                        {!metaImage && <span className={classes.placeholder}>No image</span>}
+                        {metaImage && typeof metaImage !== 'string' && (
+                          <Media imgClassName={classes.image} resource={metaImage} fill />
+                        )}
+                      </div>
+                      <div className={classes.rowContent}>
+                        <Link href={`/products/${product.slug}`}>
+                          <h6 className={classes.title}>{title}</h6>
+                        </Link>
+                        <label>Quantity: {quantity}</label>
+                        <label className={classes.price}>
+                          Price: <Price product={product} button={false} />
+                        </label>
                       </div>
                     </div>
-                  </div>
-                  {!isLast && <hr className={classes.rowHR} />}
-                </li>
-              </ul>
-            )
-          })}
-        </div>
-      )}
-      <h4>
-        {/* TODO: get actual price */}
-        {`Order Total: $0`}
-      </h4>
-      <br />
-      <Button href="/orders" appearance="primary" label="See all orders" />
-      <br />
-      <br />
-      <Button href="/account" appearance="secondary" label="Go to account" />
-    </Gutter>
+                    {!isLast && <hr className={classes.rowHR} />}
+                  </Fragment>
+                )
+              }
+              return null
+            })}
+          </div>
+        )}
+        <h4>
+          {/* TODO: get actual price */}
+          {`Order Total: ${total.formatted}`}
+        </h4>
+        <br />
+        <Button href="/orders" appearance="primary" label="See all orders" />
+        <br />
+        <br />
+        <Button href="/account" appearance="secondary" label="Go to account" />
+      </Gutter>
+    </VerticalPadding>
   )
 }
 

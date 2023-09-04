@@ -1,10 +1,8 @@
 import React from 'react'
 import { GetStaticPaths, GetStaticProps } from 'next'
-import { useRouter } from 'next/router'
 
 import { Blocks } from '../../components/Blocks'
 import { ProductHero } from '../../components/Hero/Product'
-import { PaywallBlocks } from '../../components/PaywallBlocks'
 import { getApolloClient } from '../../graphql'
 import { PRODUCT, PRODUCTS } from '../../graphql/products'
 import { Product as ProductType } from '../../payload-types'
@@ -15,7 +13,7 @@ export const Product: React.FC<{
 }> = props => {
   const { product } = props
 
-  const { query } = useRouter()
+  // const { query } = useRouter()
 
   if (product) {
     const { layout } = product
@@ -24,7 +22,7 @@ export const Product: React.FC<{
       <React.Fragment>
         <ProductHero product={product} />
         <Blocks blocks={layout} />
-        <PaywallBlocks productSlug={query.slug as string} disableTopPadding />
+        {/* <PaywallBlocks productSlug={query.slug as string} disableTopPadding /> */}
       </React.Fragment>
     )
   }

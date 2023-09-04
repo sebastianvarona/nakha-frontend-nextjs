@@ -7,519 +7,737 @@
 
 export interface Config {
   collections: {
-    users: User
-    products: Product
-    categories: Category
-    orders: Order
-    pages: Page
-    articles: Article
-    media: Media
-  }
+    users: User;
+    products: Product;
+    categories: Category;
+    orders: Order;
+    pages: Page;
+    articles: Article;
+    media: Media;
+    forms: Form;
+    'form-submissions': FormSubmission;
+  };
   globals: {
-    settings: Settings
-    header: Header
-    footer: Footer
-  }
+    settings: Settings;
+    header: Header;
+    footer: Footer;
+  };
 }
 export interface User {
-  id: string
-  name?: string
-  roles?: ('admin' | 'customer')[]
-  purchases?: string[] | Product[]
-  stripeCustomerID?: string
+  id: string;
+  name?: string;
+  roles?: ('admin' | 'customer')[];
+  purchases?: string[] | Product[];
+  stripeCustomerID?: string;
   cart?: {
     items?: {
-      product?: string | Product
-      quantity?: number
-      id?: string
-    }[]
-  }
-  skipSync?: boolean
-  updatedAt: string
-  createdAt: string
-  email?: string
-  resetPasswordToken?: string
-  resetPasswordExpiration?: string
-  salt?: string
-  hash?: string
-  loginAttempts?: number
-  lockUntil?: string
-  password?: string
+      product?: string | Product;
+      quantity?: number;
+      id?: string;
+    }[];
+  };
+  skipSync?: boolean;
+  updatedAt: string;
+  createdAt: string;
+  email?: string;
+  resetPasswordToken?: string;
+  resetPasswordExpiration?: string;
+  salt?: string;
+  hash?: string;
+  loginAttempts?: number;
+  lockUntil?: string;
+  password?: string;
 }
 export interface Product {
-  id: string
-  title: string
-  publishedDate?: string
+  id: string;
+  title: string;
+  publishedDate?: string;
   layout: (
     | {
         richText: {
-          [k: string]: unknown
-        }[]
+          [k: string]: unknown;
+        }[];
         links?: {
           link: {
-            type?: 'reference' | 'custom'
-            newTab?: boolean
+            type?: 'reference' | 'custom';
+            newTab?: boolean;
             reference: {
-              value: string | Page
-              relationTo: 'pages'
-            }
-            url: string
-            label: string
-            appearance?: 'primary' | 'secondary'
-          }
-          id?: string
-        }[]
-        id?: string
-        blockName?: string
-        blockType: 'cta'
+              value: string | Page;
+              relationTo: 'pages';
+            };
+            url: string;
+            label: string;
+            appearance?: 'primary' | 'secondary';
+          };
+          id?: string;
+        }[];
+        id?: string;
+        blockName?: string;
+        blockType: 'cta';
       }
     | {
-        backgroundColor?: 'white' | 'black'
+        backgroundColor?: 'white' | 'black';
         columns?: {
-          size?: 'oneThird' | 'half' | 'twoThirds' | 'full'
+          size?: 'oneThird' | 'half' | 'twoThirds' | 'full';
           richText: {
-            [k: string]: unknown
-          }[]
-          enableLink?: boolean
+            [k: string]: unknown;
+          }[];
+          enableLink?: boolean;
           link?: {
-            type?: 'reference' | 'custom'
-            newTab?: boolean
+            type?: 'reference' | 'custom';
+            newTab?: boolean;
             reference: {
-              value: string | Page
-              relationTo: 'pages'
-            }
-            url: string
-            label: string
-            appearance?: 'default' | 'primary' | 'secondary'
-          }
-          id?: string
-        }[]
-        id?: string
-        blockName?: string
-        blockType: 'content'
+              value: string | Page;
+              relationTo: 'pages';
+            };
+            url: string;
+            label: string;
+            appearance?: 'default' | 'primary' | 'secondary';
+          };
+          id?: string;
+        }[];
+        id?: string;
+        blockName?: string;
+        blockType: 'content';
       }
     | {
-        mediaBlockBackgroundColor?: 'white' | 'black'
-        position?: 'default' | 'fullscreen'
-        media: string | Media
-        id?: string
-        blockName?: string
-        blockType: 'mediaBlock'
+        mediaBlockBackgroundColor?: 'white' | 'black';
+        position?: 'default' | 'fullscreen';
+        media: string | Media;
+        id?: string;
+        blockName?: string;
+        blockType: 'mediaBlock';
       }
-  )[]
-  stripeProductID?: string
-  priceJSON?: string
+    | {
+        title: string;
+        limit?: number;
+        categories?: string[] | Category[];
+        populatedProducts?:
+          | {
+              value: string;
+              relationTo: 'products';
+            }[]
+          | {
+              value: Product;
+              relationTo: 'products';
+            }[];
+        populatedProductsTotal?: number;
+        id?: string;
+        blockName?: string;
+        blockType: 'relatedProducts';
+      }
+  )[];
+  stripeProductID?: string;
+  priceJSON?: string;
   paywall?: (
     | {
         richText: {
-          [k: string]: unknown
-        }[]
+          [k: string]: unknown;
+        }[];
         links?: {
           link: {
-            type?: 'reference' | 'custom'
-            newTab?: boolean
+            type?: 'reference' | 'custom';
+            newTab?: boolean;
             reference: {
-              value: string | Page
-              relationTo: 'pages'
-            }
-            url: string
-            label: string
-            appearance?: 'primary' | 'secondary'
-          }
-          id?: string
-        }[]
-        id?: string
-        blockName?: string
-        blockType: 'cta'
+              value: string | Page;
+              relationTo: 'pages';
+            };
+            url: string;
+            label: string;
+            appearance?: 'primary' | 'secondary';
+          };
+          id?: string;
+        }[];
+        id?: string;
+        blockName?: string;
+        blockType: 'cta';
       }
     | {
-        backgroundColor?: 'white' | 'black'
+        backgroundColor?: 'white' | 'black';
         columns?: {
-          size?: 'oneThird' | 'half' | 'twoThirds' | 'full'
+          size?: 'oneThird' | 'half' | 'twoThirds' | 'full';
           richText: {
-            [k: string]: unknown
-          }[]
-          enableLink?: boolean
+            [k: string]: unknown;
+          }[];
+          enableLink?: boolean;
           link?: {
-            type?: 'reference' | 'custom'
-            newTab?: boolean
+            type?: 'reference' | 'custom';
+            newTab?: boolean;
             reference: {
-              value: string | Page
-              relationTo: 'pages'
-            }
-            url: string
-            label: string
-            appearance?: 'default' | 'primary' | 'secondary'
-          }
-          id?: string
-        }[]
-        id?: string
-        blockName?: string
-        blockType: 'content'
+              value: string | Page;
+              relationTo: 'pages';
+            };
+            url: string;
+            label: string;
+            appearance?: 'default' | 'primary' | 'secondary';
+          };
+          id?: string;
+        }[];
+        id?: string;
+        blockName?: string;
+        blockType: 'content';
       }
     | {
-        mediaBlockBackgroundColor?: 'white' | 'black'
-        position?: 'default' | 'fullscreen'
-        media: string | Media
-        id?: string
-        blockName?: string
-        blockType: 'mediaBlock'
+        mediaBlockBackgroundColor?: 'white' | 'black';
+        position?: 'default' | 'fullscreen';
+        media: string | Media;
+        id?: string;
+        blockName?: string;
+        blockType: 'mediaBlock';
       }
-  )[]
-  categories?: string[] | Category[]
-  slug?: string
-  skipSync?: boolean
+    | {
+        introContent?: {
+          [k: string]: unknown;
+        }[];
+        populateBy?: 'collection' | 'selection';
+        relationTo?: 'products' | 'articles';
+        categories?: string[] | Category[];
+        limit?: number;
+        selectedDocs?:
+          | (
+              | {
+                  value: string;
+                  relationTo: 'products';
+                }
+              | {
+                  value: string;
+                  relationTo: 'articles';
+                }
+            )[]
+          | (
+              | {
+                  value: Product;
+                  relationTo: 'products';
+                }
+              | {
+                  value: Article;
+                  relationTo: 'articles';
+                }
+            )[];
+        populatedDocs?:
+          | (
+              | {
+                  value: string;
+                  relationTo: 'products';
+                }
+              | {
+                  value: string;
+                  relationTo: 'articles';
+                }
+            )[]
+          | (
+              | {
+                  value: Product;
+                  relationTo: 'products';
+                }
+              | {
+                  value: Article;
+                  relationTo: 'articles';
+                }
+            )[];
+        populatedDocsTotal?: number;
+        id?: string;
+        blockName?: string;
+        blockType: 'archive';
+      }
+  )[];
+  categories?: string[] | Category[];
+  slug?: string;
+  skipSync?: boolean;
   meta?: {
-    title?: string
-    description?: string
-    image?: string | Media
-  }
-  updatedAt: string
-  createdAt: string
-  _status?: 'draft' | 'published'
+    title?: string;
+    description?: string;
+    image?: string | Media;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: 'draft' | 'published';
 }
 export interface Page {
-  id: string
-  title: string
-  publishedDate?: string
+  id: string;
+  title: string;
+  publishedDate?: string;
   hero: {
-    type: 'highImpact' | 'lowImpact'
+    type: 'highImpact' | 'lowImpact';
     richText: {
-      [k: string]: unknown
-    }[]
+      [k: string]: unknown;
+    }[];
     links?: {
       link: {
-        type?: 'reference' | 'custom'
-        newTab?: boolean
+        type?: 'reference' | 'custom';
+        newTab?: boolean;
         reference: {
-          value: string | Page
-          relationTo: 'pages'
-        }
-        url: string
-        label: string
-        appearance?: 'default' | 'primary' | 'secondary'
-      }
-      id?: string
-    }[]
-    media: string | Media
-  }
+          value: string | Page;
+          relationTo: 'pages';
+        };
+        url: string;
+        label: string;
+        appearance?: 'default' | 'primary' | 'secondary';
+      };
+      id?: string;
+    }[];
+    media: string | Media;
+  };
   layout: (
     | {
         richText: {
-          [k: string]: unknown
-        }[]
+          [k: string]: unknown;
+        }[];
         links?: {
           link: {
-            type?: 'reference' | 'custom'
-            newTab?: boolean
+            type?: 'reference' | 'custom';
+            newTab?: boolean;
             reference: {
-              value: string | Page
-              relationTo: 'pages'
-            }
-            url: string
-            label: string
-            appearance?: 'primary' | 'secondary'
-          }
-          id?: string
-        }[]
-        id?: string
-        blockName?: string
-        blockType: 'cta'
+              value: string | Page;
+              relationTo: 'pages';
+            };
+            url: string;
+            label: string;
+            appearance?: 'primary' | 'secondary';
+          };
+          id?: string;
+        }[];
+        id?: string;
+        blockName?: string;
+        blockType: 'cta';
       }
     | {
-        backgroundColor?: 'white' | 'black'
+        backgroundColor?: 'white' | 'black';
         columns?: {
-          size?: 'oneThird' | 'half' | 'twoThirds' | 'full'
+          size?: 'oneThird' | 'half' | 'twoThirds' | 'full';
           richText: {
-            [k: string]: unknown
-          }[]
-          enableLink?: boolean
+            [k: string]: unknown;
+          }[];
+          enableLink?: boolean;
           link?: {
-            type?: 'reference' | 'custom'
-            newTab?: boolean
+            type?: 'reference' | 'custom';
+            newTab?: boolean;
             reference: {
-              value: string | Page
-              relationTo: 'pages'
-            }
-            url: string
-            label: string
-            appearance?: 'default' | 'primary' | 'secondary'
-          }
-          id?: string
-        }[]
-        id?: string
-        blockName?: string
-        blockType: 'content'
+              value: string | Page;
+              relationTo: 'pages';
+            };
+            url: string;
+            label: string;
+            appearance?: 'default' | 'primary' | 'secondary';
+          };
+          id?: string;
+        }[];
+        id?: string;
+        blockName?: string;
+        blockType: 'content';
       }
     | {
+        hasLinks?: boolean;
         title: {
-          [k: string]: unknown
-        }[]
-        side?: 'left' | 'right'
+          [k: string]: unknown;
+        }[];
+        side?: 'left' | 'right';
         richText: {
-          [k: string]: unknown
-        }[]
+          [k: string]: unknown;
+        }[];
         link: {
-          type?: 'reference' | 'custom'
-          newTab?: boolean
+          type?: 'reference' | 'custom';
+          newTab?: boolean;
           reference: {
-            value: string | Page
-            relationTo: 'pages'
-          }
-          url: string
-          label: string
-          appearance?: 'default' | 'primary' | 'secondary'
-        }
-        image: string | Media
+            value: string | Page;
+            relationTo: 'pages';
+          };
+          url: string;
+          label: string;
+          appearance?: 'default' | 'primary' | 'secondary';
+        };
+        image: string | Media;
+        imageHasDescription?: boolean;
         imageContent?: {
-          [k: string]: unknown
-        }[]
-        id?: string
-        blockName?: string
-        blockType: 'ctaWithImage'
+          [k: string]: unknown;
+        }[];
+        id?: string;
+        blockName?: string;
+        blockType: 'ctaWithImage';
       }
     | {
         richText: {
-          [k: string]: unknown
-        }[]
+          [k: string]: unknown;
+        }[];
         images?: {
-          image: string | Media
-          id?: string
-        }[]
-        id?: string
-        blockName?: string
-        blockType: 'imageContentCollage'
+          image: string | Media;
+          id?: string;
+        }[];
+        id?: string;
+        blockName?: string;
+        blockType: 'imageContentCollage';
       }
     | {
         images?: {
-          image: string | Media
-          id?: string
-        }[]
-        id?: string
-        blockName?: string
-        blockType: 'imageGrid'
+          image: string | Media;
+          id?: string;
+        }[];
+        id?: string;
+        blockName?: string;
+        blockType: 'imageGrid';
       }
     | {
         infoGrid?: {
-          title: string
-          description: string
-          image?: string | Media
-          id?: string
-        }[]
-        id?: string
-        blockName?: string
-        blockType: 'infoGrid'
+          title: string;
+          description: string;
+          image?: string | Media;
+          id?: string;
+        }[];
+        id?: string;
+        blockName?: string;
+        blockType: 'infoGrid';
       }
     | {
-        mediaBlockBackgroundColor?: 'white' | 'black'
-        position?: 'default' | 'fullscreen'
-        media: string | Media
-        id?: string
-        blockName?: string
-        blockType: 'mediaBlock'
+        mediaBlockBackgroundColor?: 'white' | 'black';
+        position?: 'default' | 'fullscreen';
+        media: string | Media;
+        id?: string;
+        blockName?: string;
+        blockType: 'mediaBlock';
       }
     | {
         questions?: {
           richText: {
-            [k: string]: unknown
-          }[]
-          id?: string
-        }[]
-        id?: string
-        blockName?: string
-        blockType: 'faq'
+            [k: string]: unknown;
+          }[];
+          id?: string;
+        }[];
+        id?: string;
+        blockName?: string;
+        blockType: 'faq';
       }
     | {
         introContent?: {
-          [k: string]: unknown
-        }[]
-        populateBy?: 'collection' | 'selection'
-        relationTo?: 'products' | 'articles'
-        categories?: string[] | Category[]
-        limit?: number
+          [k: string]: unknown;
+        }[];
+        populateBy?: 'collection' | 'selection';
+        relationTo?: 'products' | 'articles';
+        categories?: string[] | Category[];
+        limit?: number;
         selectedDocs?:
           | (
               | {
-                  value: string
-                  relationTo: 'products'
+                  value: string;
+                  relationTo: 'products';
                 }
               | {
-                  value: string
-                  relationTo: 'articles'
+                  value: string;
+                  relationTo: 'articles';
                 }
             )[]
           | (
               | {
-                  value: Product
-                  relationTo: 'products'
+                  value: Product;
+                  relationTo: 'products';
                 }
               | {
-                  value: Article
-                  relationTo: 'articles'
+                  value: Article;
+                  relationTo: 'articles';
                 }
-            )[]
+            )[];
         populatedDocs?:
           | (
               | {
-                  value: string
-                  relationTo: 'products'
+                  value: string;
+                  relationTo: 'products';
                 }
               | {
-                  value: string
-                  relationTo: 'articles'
+                  value: string;
+                  relationTo: 'articles';
                 }
             )[]
           | (
               | {
-                  value: Product
-                  relationTo: 'products'
+                  value: Product;
+                  relationTo: 'products';
                 }
               | {
-                  value: Article
-                  relationTo: 'articles'
+                  value: Article;
+                  relationTo: 'articles';
                 }
-            )[]
-        populatedDocsTotal?: number
-        id?: string
-        blockName?: string
-        blockType: 'archive'
+            )[];
+        populatedDocsTotal?: number;
+        id?: string;
+        blockName?: string;
+        blockType: 'archive';
       }
     | {
         title: {
-          [k: string]: unknown
-        }[]
+          [k: string]: unknown;
+        }[];
         selectedProducts?:
           | {
-              value: string
-              relationTo: 'products'
+              value: string;
+              relationTo: 'products';
             }[]
           | {
-              value: Product
-              relationTo: 'products'
-            }[]
-        id?: string
-        blockName?: string
-        blockType: 'featuredProducts'
+              value: Product;
+              relationTo: 'products';
+            }[];
+        id?: string;
+        blockName?: string;
+        blockType: 'featuredProducts';
       }
-  )[]
-  slug?: string
+    | FormBlock
+  )[];
+  slug?: string;
   meta?: {
-    title?: string
-    description?: string
-    image?: string | Media
-  }
-  updatedAt: string
-  createdAt: string
-  _status?: 'draft' | 'published'
+    title?: string;
+    description?: string;
+    image?: string | Media;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: 'draft' | 'published';
 }
 export interface Media {
-  id: string
-  alt: string
+  id: string;
+  alt: string;
   caption?: {
-    [k: string]: unknown
-  }[]
-  updatedAt: string
-  createdAt: string
-  url?: string
-  filename?: string
-  mimeType?: string
-  filesize?: number
-  width?: number
-  height?: number
+    [k: string]: unknown;
+  }[];
+  updatedAt: string;
+  createdAt: string;
+  url?: string;
+  filename?: string;
+  mimeType?: string;
+  filesize?: number;
+  width?: number;
+  height?: number;
 }
 export interface Category {
-  id: string
-  title?: string
-  parent?: string | Category
+  id: string;
+  title?: string;
+  parent?: string | Category;
   breadcrumbs?: {
-    doc?: string | Category
-    url?: string
-    label?: string
-    id?: string
-  }[]
-  updatedAt: string
-  createdAt: string
+    doc?: string | Category;
+    url?: string;
+    label?: string;
+    id?: string;
+  }[];
+  updatedAt: string;
+  createdAt: string;
 }
 export interface Article {
-  id: string
-  title: string
-  location?: string
-  date?: string
-  image?: string | Media
-  extract?: string
+  id: string;
+  title: string;
+  location?: string;
+  date?: string;
+  extract?: string;
   content: {
-    [k: string]: unknown
-  }[]
-  slug?: string
+    [k: string]: unknown;
+  }[];
+  slug?: string;
   meta?: {
-    title?: string
-    description?: string
-    image?: string | Media
-  }
-  updatedAt: string
-  createdAt: string
-  _status?: 'draft' | 'published'
+    title?: string;
+    description?: string;
+    image?: string | Media;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: 'draft' | 'published';
+}
+export interface FormBlock {
+  form: string | Form;
+  enableIntro?: boolean;
+  introContent: {
+    [k: string]: unknown;
+  }[];
+  image?: string | Media;
+  id?: string;
+  blockName?: string;
+  blockType: 'formBlock';
+}
+export interface Form {
+  id: string;
+  title: string;
+  fields?: (
+    | {
+        name: string;
+        label?: string;
+        width?: number;
+        defaultValue?: string;
+        required?: boolean;
+        id?: string;
+        blockName?: string;
+        blockType: 'text';
+      }
+    | {
+        name: string;
+        label?: string;
+        width?: number;
+        defaultValue?: string;
+        required?: boolean;
+        id?: string;
+        blockName?: string;
+        blockType: 'textarea';
+      }
+    | {
+        name: string;
+        label?: string;
+        width?: number;
+        defaultValue?: string;
+        options?: {
+          label: string;
+          value: string;
+          id?: string;
+        }[];
+        required?: boolean;
+        id?: string;
+        blockName?: string;
+        blockType: 'select';
+      }
+    | {
+        name: string;
+        label?: string;
+        width?: number;
+        required?: boolean;
+        id?: string;
+        blockName?: string;
+        blockType: 'email';
+      }
+    | {
+        name: string;
+        label?: string;
+        width?: number;
+        required?: boolean;
+        id?: string;
+        blockName?: string;
+        blockType: 'state';
+      }
+    | {
+        name: string;
+        label?: string;
+        width?: number;
+        required?: boolean;
+        id?: string;
+        blockName?: string;
+        blockType: 'country';
+      }
+    | {
+        name: string;
+        label?: string;
+        width?: number;
+        defaultValue?: number;
+        required?: boolean;
+        id?: string;
+        blockName?: string;
+        blockType: 'number';
+      }
+    | {
+        name: string;
+        label?: string;
+        width?: number;
+        required?: boolean;
+        defaultValue?: boolean;
+        id?: string;
+        blockName?: string;
+        blockType: 'checkbox';
+      }
+    | {
+        message?: {
+          [k: string]: unknown;
+        }[];
+        id?: string;
+        blockName?: string;
+        blockType: 'message';
+      }
+  )[];
+  submitButtonLabel?: string;
+  confirmationType?: 'message' | 'redirect';
+  confirmationMessage: {
+    [k: string]: unknown;
+  }[];
+  redirect?: {
+    url: string;
+  };
+  emails?: {
+    emailTo?: string;
+    cc?: string;
+    bcc?: string;
+    replyTo?: string;
+    emailFrom?: string;
+    subject: string;
+    message?: {
+      [k: string]: unknown;
+    }[];
+    id?: string;
+  }[];
+  updatedAt: string;
+  createdAt: string;
 }
 export interface Order {
-  id: string
+  id: string;
   orderedBy?: {
-    user?: string | User
-    name?: string
-    email?: string
-    stripeCustomerID?: string
-  }
+    user?: string | User;
+    name?: string;
+    email?: string;
+    stripeCustomerID?: string;
+  };
   items?: {
-    product?: string | Product
-    title?: string
-    priceJSON?: string
-    stripeProductID?: string
-    quantity?: number
-    id?: string
-  }[]
-  stripeInvoiceID?: string
-  stripePaymentIntentID?: string
-  updatedAt: string
-  createdAt: string
+    product?: string | Product;
+    title?: string;
+    priceJSON?: string;
+    stripeProductID?: string;
+    quantity?: number;
+    id?: string;
+  }[];
+  stripeInvoiceID?: string;
+  stripePaymentIntentID?: string;
+  updatedAt: string;
+  createdAt: string;
+}
+export interface FormSubmission {
+  id: string;
+  form: string | Form;
+  submissionData?: {
+    field: string;
+    value: string;
+    id?: string;
+  }[];
+  updatedAt: string;
+  createdAt: string;
 }
 export interface Settings {
-  id: string
-  shopPage?: string | Page
-  updatedAt?: string
-  createdAt?: string
+  id: string;
+  shopPage?: string | Page;
+  updatedAt?: string;
+  createdAt?: string;
 }
 export interface Header {
-  id: string
+  id: string;
   navItems?: {
     link: {
-      type?: 'reference' | 'custom'
-      newTab?: boolean
+      type?: 'reference' | 'custom';
+      newTab?: boolean;
       reference: {
-        value: string | Page
-        relationTo: 'pages'
-      }
-      url: string
-      label: string
-    }
-    id?: string
-  }[]
-  updatedAt?: string
-  createdAt?: string
+        value: string | Page;
+        relationTo: 'pages';
+      };
+      url: string;
+      label: string;
+    };
+    id?: string;
+  }[];
+  updatedAt?: string;
+  createdAt?: string;
 }
 export interface Footer {
-  id: string
+  id: string;
+  copyright: string;
   navItems?: {
     link: {
-      type?: 'reference' | 'custom'
-      newTab?: boolean
+      type?: 'reference' | 'custom';
+      newTab?: boolean;
       reference: {
-        value: string | Page
-        relationTo: 'pages'
-      }
-      url: string
-      label: string
-    }
-    id?: string
-  }[]
-  updatedAt?: string
-  createdAt?: string
+        value: string | Page;
+        relationTo: 'pages';
+      };
+      url: string;
+      label: string;
+    };
+    id?: string;
+  }[];
+  updatedAt?: string;
+  createdAt?: string;
 }

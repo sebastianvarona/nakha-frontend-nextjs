@@ -1,5 +1,5 @@
-import { GetStaticPaths, GetStaticProps } from 'next'
 import React from 'react'
+import { GetStaticPaths, GetStaticProps } from 'next'
 
 import { Blocks } from '../components/Blocks'
 import { Hero } from '../components/Hero'

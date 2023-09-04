@@ -1,6 +1,6 @@
+import React, { Fragment } from 'react'
 import { GetStaticProps } from 'next'
 import Link from 'next/link'
-import React, { Fragment } from 'react'
 
 import { Blocks } from '../../components/Blocks'
 import { Button } from '../../components/Button'
@@ -53,7 +53,7 @@ const CartPage: React.FC<{
             )}
           </div>
         )}
-        {cartIsEmpty === false && (
+        {!cartIsEmpty && (
           <div className={classes.items}>
             <div className={classes.itemsTotal}>
               {`There ${cart.items.length === 1 ? 'is' : 'are'} ${cart.items.length} item${
@@ -83,6 +83,9 @@ const CartPage: React.FC<{
                 return (
                   <Fragment key={index}>
                     <div className={classes.row}>
+                      <div className={classes.removeButton}>
+                        <RemoveFromCartButton product={product} />
+                      </div>
                       <div className={classes.mediaWrapper}>
                         {!metaImage && <span className={classes.placeholder}>No image</span>}
                         {metaImage && typeof metaImage !== 'string' && (
@@ -96,6 +99,7 @@ const CartPage: React.FC<{
                         <label>
                           Quantity &nbsp;
                           <input
+                            className={classes.quantityInput}
                             type="number"
                             value={quantity}
                             onChange={e => {
@@ -106,10 +110,9 @@ const CartPage: React.FC<{
                             }}
                           />
                         </label>
-                        <Price product={product} button={false} />
-                        <div>
-                          <RemoveFromCartButton product={product} />
-                        </div>
+                        <label className={classes.price}>
+                          Price: <Price product={product} button={false} />
+                        </label>
                       </div>
                     </div>
                     {!isLast && <hr className={classes.rowHR} />}
@@ -142,7 +145,6 @@ export const getStaticProps: GetStaticProps = async () => {
       slug: 'cart',
     },
   })
-  console.log('data', data)
 
   if (!data.Pages.docs[0]) {
     return {

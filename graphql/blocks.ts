@@ -87,6 +87,7 @@ export const CTA_WITH_IMAGE = `
 ... on CtaWithImage {
   blockType
   title
+  hasLinks
   richText
   side
   image {
@@ -137,6 +138,26 @@ export const FEATURED_PRODUCTS = `
         ${META}
       }
     }
+  }
+}
+`
+
+export const RELATED_PRODUCTS = `
+... on RelatedProducts {
+  blockType
+  title
+  limit
+  categories {
+    id
+  }
+}
+`
+
+export const FAQ = `
+... on Faq {
+  blockType
+  questions {
+    richText
   }
 }
 `

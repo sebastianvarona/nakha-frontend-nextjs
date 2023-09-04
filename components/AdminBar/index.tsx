@@ -1,5 +1,5 @@
-import { PayloadAdminBar, PayloadAdminBarProps } from 'payload-admin-bar'
 import React from 'react'
+import { PayloadAdminBar, PayloadAdminBarProps } from 'payload-admin-bar'
 
 import { useAuth } from '../../providers/Auth'
 import { Gutter } from '../Gutter'

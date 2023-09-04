@@ -15,6 +15,16 @@
     transform: translateY(20px);
     transition: opacity 0.5s ease, transform 0.5s ease;
   }
+  p {
+    opacity: 0;
+    transform: translateY(0px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  a {
+    opacity: 0;
+    transform: translateY(80px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
 
   // @include mid-break {
   //   padding-top: var(--gutter-h);
@@ -25,6 +35,14 @@
   h1 {
     opacity: 1;
     transform: translateY(0);
+  }
+  p {
+    opacity: 1;
+    transform: translateY(40px);
+  }
+  a{
+    opacity: 1;
+    transform: translateY(0px);
   }
 }
 
@@ -88,7 +106,6 @@
 }
 
 .overlay {
-  background: rgb(0,0,0);
   background: radial-gradient(circle, rgba(0,0,0,0.05), rgba(0,0,0,0.5), rgba(0,0,0,0.8));
   position: absolute;
   top: 0;

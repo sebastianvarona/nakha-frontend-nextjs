@@ -1,7 +1,9 @@
 @use '../../css/queries.scss' as *;
 
 .footer {
-  padding: calc(var(--base) * 4) 0;
+  padding-left: calc(var(--base) * 4);
+  padding-right: calc(var(--base) * 4);
+  padding-bottom: calc(var(--base) * 3);
   z-index: var(--header-z-index);
   background-color: var(--color-base-1000);
   color: var(--color-base-0);
@@ -24,4 +26,31 @@
   @include mid-break {
     display: none;
   }
+}
+
+.logo {
+  width: 208px;
+  display: flex;
+  align-items: flex-end;
+}
+
+.text {
+  margin: 0;
+  font-size: medium;
+  color:var(--color-base-200)
+}
+
+.leftCol {
+  flex: 1 1 0%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+}
+
+.nav {
+  flex: 1 1 0%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
 }

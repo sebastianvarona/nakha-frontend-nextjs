@@ -23,6 +23,7 @@
 .nav {
   display: flex;
   align-items: center;
+  font-size: medium;
 
   > * {
     text-decoration: none;
@@ -66,8 +67,8 @@
 
 // Scrolled header
 .scrollBackground {
-  background-color: rgba(0, 0, 0, 0.9);
   position: fixed;
+  background-color: rgba($color: #000000, $alpha: 0.8);
   // Animate entry
   top: -80px;
   transition: transform 0.3s ease-in-out;

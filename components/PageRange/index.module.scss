@@ -1,5 +1,12 @@
 @import '../../css/common';
 
+.pageRange {
+  color: var(--color-base-500);
+  font-size: medium;
+  position: relative;
+  bottom: -20px;
+}
+
 .pagination {
   display: flex;
   align-items: center;

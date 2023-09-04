@@ -11,6 +11,7 @@ export type Props = {
   el?: 'button' | 'link' | 'a'
   onClick?: () => void
   href?: string
+  form?: string
   newTab?: boolean
   className?: string
   type?: 'submit' | 'button'
@@ -22,6 +23,7 @@ export const Button: React.FC<Props> = ({
   label,
   newTab,
   href,
+  form,
   appearance,
   className: classNameFromProps,
   onClick,
@@ -30,7 +32,11 @@ export const Button: React.FC<Props> = ({
 }) => {
   let el = elFromProps
   const backgroundColor = useBackgroundColor()
-  const newTabProps = newTab ? { target: '_blank', rel: 'noopener noreferrer' } : {}
+  const newTabProps = newTab
+    ? { target: '_blank', rel: 'noopener noreferrer' }
+    : {
+        form,
+      }
   const className = [
     classes.button,
     classNameFromProps,

@@ -2,6 +2,10 @@
 
 .checkoutPage {
   margin-bottom: var(--block-padding);
+  h1 {
+    font-size: var(--small-title-size);
+    text-align: center;
+  }
 }
 
 .items {
@@ -21,10 +25,14 @@
 .rowHR {
   margin: var(--base) 0;
   background-color: var(--color-base-900);
+  opacity: 0.2;
 }
 
 .rowContent {
   margin-left: var(--base);
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--base) / 3);
 
   @include small-break {
     margin-left: 0;
@@ -44,9 +52,10 @@
   text-decoration: none;
   display: block;
   position: relative;
-  aspect-ratio: 5 / 4;
+  aspect-ratio: 5 / 7;
   width: 100%;
-  max-width: 200px;
+  max-width: 100px;
+  background-color: var(--color-base-900);
 
   @include small-break {
     max-width: unset;
@@ -65,6 +74,11 @@
 .orderTotal {
   margin-top: var(--base);
   font-weight: 600;
+}
+
+.price{
+  display: flex;
+  gap: 4px;
 }
 
 .loading,

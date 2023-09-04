@@ -13,7 +13,7 @@ export const CTAWithImageBlock: React.FC<
   Props & {
     id?: string
   }
-> = ({ title, link, richText, image, imageContent, side }) => {
+> = ({ title, hasLinks, link, richText, image, imageHasDescription, imageContent, side }) => {
   const img = image as Media
 
   const ref = useRef(null)
@@ -47,9 +47,11 @@ export const CTAWithImageBlock: React.FC<
             {/* Divider */}
             <div className={classes.divider} />
             <RichText className={classes.richText} content={richText} />
-            <VerticalPadding bottom="none" top="medium">
-              <CMSLink {...link} />
-            </VerticalPadding>
+            {hasLinks && (
+              <VerticalPadding bottom="none" top="medium">
+                <CMSLink {...link} />
+              </VerticalPadding>
+            )}
           </div>
         </Cell>
         {side === 'right' && (
@@ -65,9 +67,11 @@ export const CTAWithImageBlock: React.FC<
           >
             <div className={classes.imageWrapper}>
               <img src={img.url} alt={img.alt} />
-              <div className={classes.imageContent}>
-                <RichText className={classes.richText} content={imageContent} />
-              </div>
+              {imageHasDescription && (
+                <div className={classes.imageContent}>
+                  <RichText className={classes.richText} content={imageContent} />
+                </div>
+              )}
             </div>
           </Cell>
         )}

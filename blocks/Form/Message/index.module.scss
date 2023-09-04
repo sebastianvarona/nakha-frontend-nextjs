@@ -1,0 +1,9 @@
+@import '../../../css/common';
+
+.message {
+  margin: var(--base) 0 var(--base) 0;
+
+  @include mid-break {
+    margin: calc(var(--base) * 0.5) 0 calc(var(--base) * 0.5) 0;
+  }
+}

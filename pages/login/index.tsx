@@ -8,6 +8,7 @@ import { useRouter } from 'next/router'
 import { Button } from '../../components/Button'
 import { Gutter } from '../../components/Gutter'
 import { Input } from '../../components/Input'
+import { VerticalPadding } from '../../components/VerticalPadding'
 import { getApolloClient } from '../../graphql'
 import { FOOTER, HEADER } from '../../graphql/globals'
 import { useAuth } from '../../providers/Auth'
@@ -49,34 +50,35 @@ const Login: React.FC = () => {
   }, [router])
 
   return (
-    <Gutter className={classes.login}>
-      <h1>Log in</h1>
-      <p>
-        To log in, use the email <b>dev@payloadcms.com</b> with the password <b>test</b>.
-      </p>
-      {error && <div className={classes.error}>{error}</div>}
-      <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
-        <Input
-          name="email"
-          label="Email Address"
-          required
-          register={register}
-          error={errors.email}
-        />
-        <Input
-          name="password"
-          type="password"
-          label="Password"
-          required
-          register={register}
-          error={errors.password}
-        />
-        <Button type="submit" appearance="primary" label="Login" />
-      </form>
-      <Link href="/create-account">Create an account</Link>
-      <br />
-      <Link href="/recover-password">Recover your password</Link>
-    </Gutter>
+    <VerticalPadding top="header">
+      <Gutter className={classes.login}>
+        <div className={classes.top}>
+          <h1>Log in</h1>
+        </div>
+        {error && <div className={classes.error}>{error}</div>}
+        <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
+          <Input
+            name="email"
+            label="Email Address"
+            required
+            register={register}
+            error={errors.email}
+          />
+          <Input
+            name="password"
+            type="password"
+            label="Password"
+            required
+            register={register}
+            error={errors.password}
+          />
+          <Button type="submit" appearance="primary" label="Login" />
+        </form>
+        <Link href="/create-account">Create an account</Link>
+        <br />
+        <Link href="/recover-password">Recover your password</Link>
+      </Gutter>
+    </VerticalPadding>
   )
 }
 

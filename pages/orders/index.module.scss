@@ -2,6 +2,10 @@
 
 .orders {
   margin-bottom: var(--block-padding);
+  h1 {
+    font-size: var(--small-title-size);
+    text-align: center;
+  }
 }
 
 .form {
@@ -24,8 +28,59 @@
 .ordersList {
   padding: 0;
   list-style: none;
+  li {
+    margin-bottom: var(--base);
+  }
 }
 
 .item {
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
   margin-bottom: calc(var(--base) / 2);
+
+  .itemName{
+    font-size: small;
+  }
+
+  img {
+    width: 100px;
+    aspect-ratio: 5/7;
+    object-fit: cover;
+  }
+}
+
+.productsRow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--base);
+
+  @include small-break {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+.link {
+  display: flex;
+  gap: 6px;
+}
+
+.rowHR {
+  margin: var(--base) 0;
+  background-color: var(--color-base-900);
+  opacity: 0.2;
+  width: 100%;
+}
+
+.itemPrice {
+  width: 100px;
+  text-align: center;
+  font-size: small;
+}
+.secondary {
+  background-color: var(--color-base-900);
+  padding: var(--base);
 }

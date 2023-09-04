@@ -5,6 +5,12 @@
   border: none;
   font-size: inherit;
   line-height: inherit;
-  text-decoration: underline;
+  // text-decoration: underline;
   white-space: nowrap;
+  svg {
+    stroke: var(--color-base-150);
+    &:hover {
+      stroke: rgb(192, 44, 44);
+    }
+  }
 }

@@ -13,3 +13,7 @@
 .bottom-medium {
   padding-bottom: calc(var(--block-padding) / 2);
 }
+
+.header {
+  padding-top: var(--header-height);
+}

@@ -10,6 +10,7 @@ type Props = {
   required?: boolean
   error: any
   type?: 'text' | 'number' | 'password'
+  rows?: number
 }
 
 export const Input: React.FC<Props> = ({
@@ -19,13 +20,18 @@ export const Input: React.FC<Props> = ({
   register,
   error,
   type = 'text',
+  rows,
 }) => {
   return (
     <div className={classes.input}>
       <label htmlFor="name" className={classes.label}>
         {`${label} ${required ? '*' : ''}`}
       </label>
-      <input {...{ type }} {...register(name, { required })} />
+      {rows ? (
+        <textarea {...{ type }} {...register(name, { required })} rows={rows} maxLength={500} />
+      ) : (
+        <input {...{ type }} {...register(name, { required })} />
+      )}
       {error && <div className={classes.error}>This field is required</div>}
     </div>
   )

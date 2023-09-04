@@ -5,10 +5,12 @@ import { useRouter } from 'next/router'
 
 import { Button } from '../../components/Button'
 import { Gutter } from '../../components/Gutter'
+import { VerticalPadding } from '../../components/VerticalPadding'
 import { getApolloClient } from '../../graphql'
 import { HEADER_QUERY } from '../../graphql/globals'
-import { Order } from '../../payload-types'
+import { Media, Order, Product } from '../../payload-types'
 import { useAuth } from '../../providers/Auth'
+import { formatLocaleRelative } from '../../utilities/formatDateTime'
 
 import classes from './index.module.scss'
 
@@ -50,22 +52,46 @@ const Orders: React.FC = () => {
   }, [router])
 
   return (
-    <Gutter className={classes.orders}>
-      <h1>Orders</h1>
-      {error && <div className={classes.error}>{error}</div>}
-      {success && <div className={classes.success}>{success}</div>}
-      {!orders || (orders.length === 0 && <p>You have no orders.</p>)}
-      {orders && orders.length > 0 && (
-        <ul className={classes.ordersList}>
-          {orders.map(order => (
-            <li key={order.id} className={classes.item}>
-              <Link href={`/orders/${order.id}`}>{order.id}</Link>
-            </li>
-          ))}
-        </ul>
-      )}
-      <Button href="/account" appearance="primary" label="Go to account" />
-    </Gutter>
+    <VerticalPadding top="header">
+      <Gutter className={classes.orders}>
+        <h1>Orders</h1>
+        {error && <div className={classes.error}>{error}</div>}
+        {success && <div className={classes.success}>{success}</div>}
+        {!orders || (orders.length === 0 && <p>You have no orders.</p>)}
+
+        {orders && orders.length > 0 && (
+          <ul className={classes.ordersList}>
+            {orders.map((order, i) => (
+              <li key={order.id} className={i % 2 === 0 ? classes.secondary : ''}>
+                <div>{formatLocaleRelative(order.createdAt)}</div>
+                <div className={classes.item}>
+                  <div className={classes.link}>
+                    View Order:
+                    <Link href={`/orders/${order.id}`}>
+                      <span>{order.id}</span>
+                    </Link>
+                  </div>
+                  <div className={classes.productsRow}>
+                    {order.items.map(item => {
+                      const product = item.product as Product
+                      const media = product.meta.image as Media
+                      return (
+                        <div key={item.id} className={classes.item}>
+                          <div className={classes.itemName}>{item.title}</div>
+                          <img src={media.url} alt={media.alt} />
+                          <div className={classes.itemPrice}>x{item.quantity}</div>
+                        </div>
+                      )
+                    })}
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
+        <Button href="/account" appearance="primary" label="Go to account" />
+      </Gutter>
+    </VerticalPadding>
   )
 }
 

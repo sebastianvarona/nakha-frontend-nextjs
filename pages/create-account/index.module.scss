@@ -1,5 +1,9 @@
 .createAccount {
   margin-bottom: var(--block-padding);
+  h1 {
+    font-size: var(--small-title-size);
+    text-align: center;
+  }
 }
 
 .form {

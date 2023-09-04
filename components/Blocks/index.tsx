@@ -1,14 +1,17 @@
 import React, { Fragment } from 'react'
 
 import { ArchiveBlock } from '../../blocks/ArchiveBlock'
-import { CTAWithImageBlock } from '../../blocks/CTAWithImage/index'
 import { CallToActionBlock } from '../../blocks/CallToAction'
 import { ContentBlock } from '../../blocks/Content'
+import { CTAWithImageBlock } from '../../blocks/CTAWithImage/index'
+import { FaqItems } from '../../blocks/FaqItems'
 import { FeaturedProducts } from '../../blocks/FeaturedProducts/index'
+import { FormBlock } from '../../blocks/Form'
 import { ImageContentCollageBlock } from '../../blocks/ImageContentCollage'
 import { InfoGrid } from '../../blocks/InfoGrid'
 import { MediaBlock } from '../../blocks/MediaBlock'
-import { Page } from '../../payload-types'
+import { RelatedProducts } from '../../blocks/RelatedProducts'
+import { Page, Product } from '../../payload-types'
 import { toKebabCase } from '../../utilities/toKebabCase'
 import { VerticalPadding, VerticalPaddingOptions } from '../VerticalPadding'
 
@@ -21,10 +24,13 @@ const blockComponents = {
   ctaWithImage: CTAWithImageBlock,
   infoGrid: InfoGrid,
   featuredProducts: FeaturedProducts,
+  relatedProducts: RelatedProducts,
+  faq: FaqItems,
+  formBlock: FormBlock,
 }
 
 export const Blocks: React.FC<{
-  blocks: Page['layout']
+  blocks: Page['layout'] | Product['layout']
   disableTopPadding?: boolean
 }> = props => {
   const { disableTopPadding, blocks } = props

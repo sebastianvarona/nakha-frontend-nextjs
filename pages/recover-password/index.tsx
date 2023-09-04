@@ -6,6 +6,7 @@ import { GetStaticProps } from 'next'
 import { Button } from '../../components/Button'
 import { Gutter } from '../../components/Gutter'
 import { Input } from '../../components/Input'
+import { VerticalPadding } from '../../components/VerticalPadding'
 import { getApolloClient } from '../../graphql'
 import { FOOTER, HEADER, SETTINGS } from '../../graphql/globals'
 
@@ -47,34 +48,36 @@ const RecoverPassword: React.FC = () => {
   }, [])
 
   return (
-    <Gutter className={classes.recoverPassword}>
-      {!success && (
-        <React.Fragment>
-          <h1>Recover Password</h1>
-          <p>
-            Please enter your email below. You will receive an email message with instructions on
-            how to reset your password.
-          </p>
-          {error && <div className={classes.error}>{error}</div>}
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <Input
-              name="email"
-              label="Email Address"
-              required
-              register={register}
-              error={errors.email}
-            />
-            <Button type="submit" appearance="primary" label="Submit" />
-          </form>
-        </React.Fragment>
-      )}
-      {success && (
-        <React.Fragment>
-          <h1>Request submitted</h1>
-          <p>Check your email for a link that will allow you to securely reset your password.</p>
-        </React.Fragment>
-      )}
-    </Gutter>
+    <VerticalPadding top="header" bottom="none">
+      <Gutter className={classes.recoverPassword}>
+        {!success && (
+          <React.Fragment>
+            <h1>Recover Password</h1>
+            <p>
+              Please enter your email below. You will receive an email message with instructions on
+              how to reset your password.
+            </p>
+            {error && <div className={classes.error}>{error}</div>}
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <Input
+                name="email"
+                label="Email Address"
+                required
+                register={register}
+                error={errors.email}
+              />
+              <Button type="submit" appearance="primary" label="Submit" />
+            </form>
+          </React.Fragment>
+        )}
+        {success && (
+          <React.Fragment>
+            <h1>Request submitted</h1>
+            <p>Check your email for a link that will allow you to securely reset your password.</p>
+          </React.Fragment>
+        )}
+      </Gutter>
+    </VerticalPadding>
   )
 }
 

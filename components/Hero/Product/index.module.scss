@@ -17,12 +17,20 @@
 }
 
 .categories {
-  margin-bottom: calc(var(--base) / 2);
+  margin-bottom: calc(var(--base) / 1.5);
+  background-color: var(--color-base-900);
+  padding: 0 12px;
+  font-size: small;
+  text-transform: uppercase;
+  font-weight: 600;
 }
 
 .title {
   margin: 0;
   margin-bottom: var(--base);
+  text-transform: capitalize;
+  font-size: 2.5rem;
+  line-height: 1.2;
 
   @include mid-break {
     margin-bottom: calc(var(--base) / 2);
@@ -32,6 +40,8 @@
 .description {
   margin: 0;
   margin-bottom: var(--base);
+  color: var(--color-base-150);
+  font-weight: 300;
 
   @include mid-break {
     margin-bottom: calc(var(--base) / 2);
@@ -42,9 +52,14 @@
   text-decoration: none;
   display: block;
   position: relative;
-  aspect-ratio: 5 / 4;
+  aspect-ratio: 5 / 7;
+  background-color: var(--color-base-900);
   margin-bottom: calc(var(--base) / 2);
-  width: calc(100% + calc(var(--gutter-h) / 2));
+  // width: calc(100% + calc(var(--gutter-h) / 2));
+  width: 100%;
+  background-image: url('/backgrounds/roasted_coffee.jpg');
+  background-size: cover;
+  background-position: center;
 
   @include mid-break {
     margin-left: calc(var(--gutter-h) * -1);
@@ -67,4 +82,16 @@
 
 .addToCartButton {
   margin-top: var(--base);
+  background-color: var(--color-base-0);
+  color: var(--color-base-900);
+  padding: 10px 20px;
+  &:hover {
+    background-color: var(--color-base-300);
+  }
+}
+
+.overlay {
+  background-color: rgba($color: #000000, $alpha: 0.5);
+  position: absolute;
+  inset: 0;
 }

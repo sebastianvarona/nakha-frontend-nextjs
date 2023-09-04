@@ -5,6 +5,7 @@ import {
   CALL_TO_ACTION,
   CONTENT,
   CTA_WITH_IMAGE,
+  FAQ,
   FEATURED_PRODUCTS,
   IMAGE_CONTENT_COLLAGE,
   INFO_GRID,
@@ -48,6 +49,7 @@ export const PAGE = gql`
           ${INFO_GRID}
           ${ARCHIVE_BLOCK}
           ${FEATURED_PRODUCTS}
+          ${FAQ}
         }
         ${META}
       }

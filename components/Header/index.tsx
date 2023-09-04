@@ -1,14 +1,14 @@
+import React, { useEffect, useState } from 'react'
 import { ModalToggler } from '@faceless-ui/modal'
 import Link from 'next/link'
-import React, { useEffect, useState } from 'react'
 
 import { Header as HeaderType } from '../../payload-types'
 import { useAuth } from '../../providers/Auth'
 import { CartLink } from '../CartLink'
 import { Gutter } from '../Gutter'
+import { MenuIcon } from '../icons/Menu'
 import { CMSLink } from '../Link'
 import { Logo } from '../Logo'
-import { MenuIcon } from '../icons/Menu'
 import { MobileMenuModal, slug as menuModalSlug } from './MobileMenuModal'
 
 import classes from './index.module.scss'
@@ -54,7 +54,7 @@ export const Header: React.FC<{ header: HeaderType }> = ({ header }) => {
             </nav>
 
             <Link href="/">
-              <Logo color="white" />
+              <Logo color="white" variant="small" />
             </Link>
 
             <nav className={`${classes.nav} ${classes.end}`}>
@@ -65,7 +65,6 @@ export const Header: React.FC<{ header: HeaderType }> = ({ header }) => {
               {!user && (
                 <React.Fragment>
                   <Link href="/login">Login</Link>
-                  <Link href="/create-account">Create Account</Link>
                 </React.Fragment>
               )}
               <CartLink />

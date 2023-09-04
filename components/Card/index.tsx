@@ -1,5 +1,5 @@
-import Link from 'next/link'
 import React, { Fragment, useEffect, useState } from 'react'
+import Link from 'next/link'
 
 import { Media } from '../Media'
 import { Price } from '../Price'
@@ -67,9 +67,12 @@ export const Card: React.FC<{
   }, [priceJSON])
 
   if (relationTo === 'products') {
+    // * Products
+
     return (
       <div className={[classes.card, className].filter(Boolean).join(' ')}>
         <Link href={href} className={`${classes.mediaWrapper} ${classes.mediaProductWrapper}`}>
+          <div className={classes.overlay} />
           {!metaImage && <div className={classes.placeholder}>No image</div>}
           {metaImage && typeof metaImage !== 'string' && (
             <Media imgClassName={classes.image} resource={metaImage} fill />
@@ -98,7 +101,7 @@ export const Card: React.FC<{
           </div>
         )}
         {titleToUse && (
-          <h4 className={classes.title}>
+          <h4 className={classes.productTitle}>
             <Link href={href} className={classes.link}>
               {titleToUse}
             </Link>
@@ -113,6 +116,7 @@ export const Card: React.FC<{
       </div>
     )
   } else {
+    // * Articles
     const { description, image: metaImage } = meta || {}
 
     return (
@@ -124,8 +128,10 @@ export const Card: React.FC<{
           )}
         </Link>
         {titleToUse && (
-          <h4 className={classes.title}>
-            <Link href={href}>{titleToUse}</Link>
+          <h4 className={[classes.articleTitle, classes.alignLeft].join(' ')}>
+            <Link href={href} className={classes.link}>
+              {titleToUse}
+            </Link>
           </h4>
         )}
         {showDescription && description && (

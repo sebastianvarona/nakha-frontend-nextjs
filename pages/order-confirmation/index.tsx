@@ -6,6 +6,7 @@ import { useRouter } from 'next/router'
 
 import { Button } from '../../components/Button'
 import { Gutter } from '../../components/Gutter'
+import { VerticalPadding } from '../../components/VerticalPadding'
 import { getApolloClient } from '../../graphql'
 import { FOOTER, HEADER, SETTINGS } from '../../graphql/globals'
 import { useCart } from '../../providers/Cart'
@@ -17,6 +18,7 @@ const stripePromise = loadStripe(apiKey)
 
 const OrderConfirmation: React.FC = () => {
   const [message, setMessage] = useState(null)
+  const [status, setStatus] = useState(null)
   const { query } = useRouter()
   const { clearCart } = useCart()
   const hasRetrievedPaymentIntent = useRef(false)
@@ -38,17 +40,21 @@ const OrderConfirmation: React.FC = () => {
       switch (paymentIntent.status) {
         case 'succeeded':
           if (shouldClearCart) clearCart()
-          setMessage('Success! Payment received.')
+          setMessage('Thank you for your order. You should receive an email confirmation shortly.')
+          setStatus('succeeded')
           break
         case 'processing':
           if (shouldClearCart) clearCart()
           setMessage("Payment processing. We'll update you when payment is received.")
+          setStatus('processing')
           break
         case 'requires_payment_method':
           setMessage('Payment failed. Please try another payment method.')
+          setStatus('failed')
           break
         default:
           setMessage('Something went wrong.')
+          setStatus('failed')
           break
       }
     }
@@ -57,15 +63,36 @@ const OrderConfirmation: React.FC = () => {
   }, [clearCart])
 
   return (
-    <Gutter className={classes.confirmationPage}>
-      <h1>Order confirmed</h1>
-      <p>
-        {`Status: ${message}`}
-        <br />
-        {`Stripe Payment ID: ${query.payment_intent}`}
-      </p>
-      <Button href="/orders" appearance="primary" label="View orders" />
-    </Gutter>
+    <VerticalPadding top="header" bottom="none">
+      <Gutter className={classes.confirmationPage}>
+        <h1>Order confirmed</h1>
+
+        <p
+          className={[
+            classes.message,
+            status === 'succeeded'
+              ? classes.success
+              : status === 'processing'
+              ? classes.processing
+              : classes.failed,
+          ].join(' ')}
+        >
+          {message}
+          {query.payment_intent && (
+            <>
+              <br />
+              Order ID: {query.payment_intent}
+            </>
+          )}
+        </p>
+        {/* <p>
+          {`Status: ${message}`}
+          <br />
+          {`Stripe Payment ID: ${query.payment_intent}`}
+        </p> */}
+        <Button href="/orders" appearance="primary" label="View orders" />
+      </Gutter>
+    </VerticalPadding>
   )
 }
 

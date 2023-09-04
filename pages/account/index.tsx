@@ -1,16 +1,17 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { GetStaticProps } from 'next'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 
 import { Button } from '../../components/Button'
 import { Gutter } from '../../components/Gutter'
 import { Input } from '../../components/Input'
+import { VerticalPadding } from '../../components/VerticalPadding'
 import { getApolloClient } from '../../graphql'
-import { HEADER_QUERY } from '../../graphql/globals'
+import { GLOBALS_QUERY } from '../../graphql/globals'
 import { useAuth } from '../../providers/Auth'
-import classes from './index.module.css'
+
+import classes from './index.module.scss'
 
 type FormData = {
   email: string
@@ -84,54 +85,56 @@ const Account: React.FC = () => {
   }, [router])
 
   return (
-    <Gutter className={classes.account}>
-      <h1>Account</h1>
-      {error && <div className={classes.error}>{error}</div>}
-      {success && <div className={classes.success}>{success}</div>}
-      <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
-        <Input
-          name="email"
-          label="Email Address"
-          required
-          register={register}
-          error={errors.email}
-        />
-        <Input name="name" label="Name" required register={register} error={errors.name} />
-        <Button type="submit" label="Update account" appearance="primary" />
-      </form>
-      <hr className={classes.hr} />
-      <h2>Purchased Products</h2>
-      <div>
-        {user?.purchases?.length > 0 ? (
-          user.purchases.map(purchase => {
-            if (typeof purchase === 'string') {
+    <VerticalPadding top="header">
+      <Gutter className={classes.account}>
+        <h1>Account</h1>
+        {error && <div className={classes.error}>{error}</div>}
+        {success && <div className={classes.success}>{success}</div>}
+        <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
+          <Input
+            name="email"
+            label="Email Address"
+            required
+            register={register}
+            error={errors.email}
+          />
+          <Input name="name" label="Name" required register={register} error={errors.name} />
+          <Button type="submit" label="Update account" appearance="primary" />
+        </form>
+        {/* <hr className={classes.hr} />
+        <h2>Purchased Products</h2>
+        <div>
+          {user?.purchases?.length > 0 ? (
+            user.purchases.map(purchase => {
+              if (typeof purchase === 'string') {
+                return (
+                  <div key={purchase}>
+                    <h4>{purchase}</h4>
+                  </div>
+                )
+              }
               return (
-                <div key={purchase}>
-                  <h4>{purchase}</h4>
-                </div>
+                <Link key={purchase.id} href={`/products/${purchase.slug}`}>
+                  <h4>{purchase.title}</h4>
+                </Link>
               )
-            }
-            return (
-              <Link key={purchase.id} href={`/products/${purchase.slug}`}>
-                <h4>{purchase.title}</h4>
-              </Link>
-            )
-          })
-        ) : (
-          <div>You have no purchases.</div>
-        )}
-      </div>
-      <hr className={classes.hr} />
-      <h2>Orders</h2>
-      <Button
-        className={classes.ordersButton}
-        href="/orders"
-        appearance="primary"
-        label="View orders"
-      />
-      <hr className={classes.hr} />
-      <Button href="/logout" appearance="secondary" label="Log out" />
-    </Gutter>
+            })
+          ) : (
+            <div>You have no purchases.</div>
+          )}
+        </div> */}
+        <hr className={classes.hr} />
+        <h2>Orders</h2>
+        <Button
+          className={classes.ordersButton}
+          href="/orders"
+          appearance="primary"
+          label="View orders"
+        />
+        <hr className={classes.hr} />
+        <Button href="/logout" appearance="secondary" label="Log out" />
+      </Gutter>
+    </VerticalPadding>
   )
 }
 
@@ -139,7 +142,7 @@ export const getStaticProps: GetStaticProps = async () => {
   const apolloClient = getApolloClient()
 
   const { data } = await apolloClient.query({
-    query: HEADER_QUERY,
+    query: GLOBALS_QUERY,
   })
 
   return {

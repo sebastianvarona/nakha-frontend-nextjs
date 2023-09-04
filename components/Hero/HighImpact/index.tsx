@@ -1,11 +1,11 @@
 import React, { Fragment, useEffect, useState } from 'react'
 
 import { Page } from '../../../payload-types'
+import { CMSLink } from '../../Link'
 import { Media } from '../../Media'
 import RichText from '../../RichText'
-
-import { CMSLink } from '../../Link'
 import { VerticalPadding } from '../../VerticalPadding/index'
+
 import classes from './index.module.scss'
 
 export const HighImpactHero: React.FC<Page['hero']> = ({ richText, media, links }) => {

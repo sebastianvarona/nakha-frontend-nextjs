@@ -1,0 +1,15 @@
+@import '../../../css/common';
+
+.wrap {
+  position: relative;
+  margin-bottom: var(--base);
+}
+
+.textarea {
+  height: unset;
+}
+
+.label {
+  margin-bottom: 10px;
+  display: block;
+}
