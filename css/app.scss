@@ -2,8 +2,6 @@
 @use './colors.scss' as *;
 @use './type.scss' as *;
 
-@import url("https://fonts.googleapis.com/css2?family=Quattrocento+Sans:wght@300;400;500;600;700&family=Quattrocento:wght@400;700&display=swap");
-
 :root {
   --breakpoint-xs-width : #{$breakpoint-xs-width};
   --breakpoint-s-width : #{$breakpoint-s-width};
