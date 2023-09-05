@@ -39,9 +39,17 @@ $spacer-h: calc(var(--block-padding) / 2);
   overflow: hidden;
   img{
     object-fit: cover;
+    width: 100%;
     transition: transform 0.3s ease-in-out;
     &:hover {
       transform: scale(var(--scale-factor));
     }
+  }
+  @include small-break {
+    aspect-ratio: 1/1;
+    margin: 0 20%;
+  }
+  @include extra-small-break {
+    margin: 0 24px;
   }
 }

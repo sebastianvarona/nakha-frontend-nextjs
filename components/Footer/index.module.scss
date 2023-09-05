@@ -7,6 +7,11 @@
   z-index: var(--header-z-index);
   background-color: var(--color-base-1000);
   color: var(--color-base-0);
+
+  @include small-break {
+    padding-left: var(--base);
+    padding-right: var(--base);
+  }
 }
 
 .wrap {
@@ -53,4 +58,13 @@
   display: flex;
   align-items: flex-end;
   justify-content: flex-end;
+}
+
+.brand {
+  @include small-break {
+    display: block;
+  }
+  @include extra-small-break {
+    font-size: 1rem;
+  }
 }

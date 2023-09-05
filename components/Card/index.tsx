@@ -100,19 +100,21 @@ export const Card: React.FC<{
             )}
           </div>
         )}
-        {titleToUse && (
-          <h4 className={classes.productTitle}>
-            <Link href={href} className={classes.link}>
-              {titleToUse}
-            </Link>
-          </h4>
-        )}
-        {showDescription && description && (
-          <div className={classes.body}>
-            {description && <p className={classes.description}>{sanitizedDescription}</p>}
-          </div>
-        )}
-        {relationTo === 'products' && <Price product={doc} />}
+        <div className={classes.info}>
+          {titleToUse && (
+            <h4 className={classes.productTitle}>
+              <Link href={href} className={classes.link}>
+                {titleToUse}
+              </Link>
+            </h4>
+          )}
+          {showDescription && description && (
+            <div className={classes.body}>
+              {description && <p className={classes.description}>{sanitizedDescription}</p>}
+            </div>
+          )}
+          {relationTo === 'products' && <Price product={doc} />}
+        </div>
       </div>
     )
   } else {

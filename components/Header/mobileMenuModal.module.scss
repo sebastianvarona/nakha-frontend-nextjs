@@ -8,6 +8,9 @@
   padding: 0;
   opacity: 1;
   display: none;
+  background-color: black;
+  color: white;
+  padding-top: 3.5rem;
 
   @include mid-break {
     display: block;

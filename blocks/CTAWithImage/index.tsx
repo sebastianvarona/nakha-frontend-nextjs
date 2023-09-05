@@ -1,10 +1,12 @@
+import React, { useRef } from 'react'
 import { Cell, Grid } from '@faceless-ui/css-grid'
 import { useInView } from 'framer-motion'
-import React, { useRef } from 'react'
+
 import { CMSLink } from '../../components/Link'
 import RichText from '../../components/RichText'
 import { VerticalPadding } from '../../components/VerticalPadding'
 import { Media, Page } from '../../payload-types'
+
 import classes from './index.module.scss'
 
 type Props = Extract<Page['layout'][0], { blockType: 'ctaWithImage' }>
@@ -25,7 +27,7 @@ export const CTAWithImageBlock: React.FC<
         {side === 'left' && (
           <Cell
             cols={6}
-            colsM={12}
+            colsS={12}
             ref={ref}
             style={{
               transform: isInView ? 'none' : 'translateX(-200px)',
@@ -41,7 +43,7 @@ export const CTAWithImageBlock: React.FC<
             </div>
           </Cell>
         )}
-        <Cell cols={6} colsM={12}>
+        <Cell cols={6} colsS={12}>
           <div className={classes.content}>
             <RichText className={classes.richText} content={title} />
             {/* Divider */}
@@ -57,7 +59,7 @@ export const CTAWithImageBlock: React.FC<
         {side === 'right' && (
           <Cell
             cols={6}
-            colsM={12}
+            colsS={12}
             ref={ref}
             style={{
               transform: isInView ? 'none' : 'translateX(200px)',

@@ -1,11 +1,11 @@
 import React from 'react'
+import { Cell, Grid } from '@faceless-ui/css-grid'
 
+import { Card } from '../../components/Card'
 import { Gutter } from '../../components/Gutter'
 import RichText from '../../components/RichText'
 import { FeaturedProductsProps } from './types'
 
-import { Cell, Grid } from '@faceless-ui/css-grid'
-import { Card } from '../../components/Card'
 import classes from './index.module.scss'
 
 export const FeaturedProducts: React.FC<
@@ -24,7 +24,7 @@ export const FeaturedProducts: React.FC<
         <Grid className={classes.grid}>
           {selectedProducts?.map((product, index) => {
             return (
-              <Cell key={index} className={classes.row} cols={4} colsM={8}>
+              <Cell key={index} className={classes.row} cols={4} colsS={12}>
                 <Card relationTo={'products'} doc={product.value} showDescription={false} />
               </Cell>
             )

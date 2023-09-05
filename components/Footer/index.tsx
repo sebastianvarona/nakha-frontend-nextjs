@@ -16,7 +16,9 @@ export const Footer: React.FC<{ footer: FooterType }> = ({ footer }) => {
       <Gutter className={classes.wrap}>
         <div className={classes.leftCol}>
           <p className={classes.text}>
-            © {new Date().getFullYear()} <span className={classes.name}>NAKHA ®</span>.{' '}
+            <span className={classes.brand}>
+              © {new Date().getFullYear()} <span className={classes.name}>NAKHA ®</span>.
+            </span>{' '}
             {footer?.copyright || ''}
           </p>
         </div>

@@ -55,10 +55,11 @@
   all: unset;
   cursor: pointer;
   display: none;
+  margin-left: 20px;
 
-  &[aria-expanded="true"] {
-    transform: rotate(-25deg);
-  }
+  // &[aria-expanded="true"] {
+  //   transform: rotate(-25deg);
+  // }
 
   @include mid-break {
     display: block;

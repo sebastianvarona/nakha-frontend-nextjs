@@ -78,6 +78,14 @@
 .mediaProductWrapper {
   aspect-ratio: 5 / 7;
   background-color: var(--color-base-900);
+  
+  @include small-break {
+    margin: 0 20%;
+  }
+
+  @include extra-small-break {
+    margin: 0 0;
+  }
 }
 .mediaArticleWrapper {
   aspect-ratio: 4 / 3;
@@ -120,4 +128,10 @@
   justify-content: center;
   align-items: center;
   border-radius: 10px;
+}
+
+.info {
+  @include small-break{
+    margin-bottom: 2rem;
+  }
 }

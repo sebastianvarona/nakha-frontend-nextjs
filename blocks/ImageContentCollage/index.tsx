@@ -1,10 +1,11 @@
-import { Cell, Grid } from '@faceless-ui/css-grid'
 import { FC, useRef } from 'react'
+import { Cell, Grid } from '@faceless-ui/css-grid'
+import { useInView } from 'framer-motion'
+
 import RichText from '../../components/RichText'
 import { VerticalPadding } from '../../components/VerticalPadding'
 import { Media, Page } from '../../payload-types'
 
-import { useInView } from 'framer-motion'
 import classes from './index.module.scss'
 
 type Props = Extract<Page['layout'][0], { blockType: 'imageContentCollage' }>
@@ -21,7 +22,7 @@ export const ImageContentCollageBlock: FC<
     <>
       <VerticalPadding top="medium" bottom="none">
         <Grid>
-          <Cell cols={8} colsM={12} start={3}>
+          <Cell cols={8} start={3} colsM={10} startM={2}>
             <div className={classes.content}>
               <RichText className={classes.richText} content={richText} />
             </div>
@@ -34,7 +35,7 @@ export const ImageContentCollageBlock: FC<
             const { url, alt } = image as Media
 
             return (
-              <Cell key={i} cols={4} colsM={12} className={classes.imageCell}>
+              <Cell key={i} cols={4} colsS={12} className={classes.imageCell}>
                 <div className={classes.imageContainer}>
                   <img
                     src={url}

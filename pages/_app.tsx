@@ -69,8 +69,8 @@ const PayloadApp = (
             xl: '72px',
           }}
           cols={{
-            s: 4,
-            m: 4,
+            s: 12,
+            m: 12,
             l: 12,
             xl: 12,
           }}
