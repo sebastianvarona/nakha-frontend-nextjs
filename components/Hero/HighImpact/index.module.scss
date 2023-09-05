@@ -5,6 +5,7 @@
   position: relative;
   overflow: hidden;
   height: 100vh;
+  min-height: 656px;
   opacity: 0;
   transition: opacity 1s ease;
   background-color: var(--color-base-1000);
@@ -25,10 +26,22 @@
     transform: translateY(80px);
     transition: opacity 0.5s ease, transform 0.5s ease;
   }
-
-  // @include mid-break {
-  //   padding-top: var(--gutter-h);
-  // }
+  @include extra-small-break {
+    h1{
+      font-size: 2rem;
+    }
+  }
+  @include small-break {
+    h1, p{
+      padding: 0 3rem;
+    }
+  }
+  @include mid-break {
+    min-height: auto;
+    h1, p{
+      padding: 0 3rem;
+    }
+  }
 }
 .visible {
   opacity: 1;
@@ -99,6 +112,10 @@
   align-items: center;
   z-index: 3;
   text-align: center;
+
+  @include large-break {
+    width: 80%;
+  }
 
   @include mid-break {
     width: 100%;
