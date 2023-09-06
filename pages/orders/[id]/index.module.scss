@@ -84,6 +84,16 @@
   @include small-break {
     max-width: unset;
     margin-bottom: calc(var(--base) / 2);
+    aspect-ratio: 16 / 9;
+    img {
+      object-fit: contain;
+    }
+  }
+  @include extra-small-break {
+    aspect-ratio: 4 / 3;
+    img {
+      object-fit: contain;
+    }
   }
 }
 
