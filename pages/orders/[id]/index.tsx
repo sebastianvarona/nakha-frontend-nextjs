@@ -91,11 +91,12 @@ const Order: React.FC = () => {
             <h4 className={classes.orderTitle}>Items</h4>
             {order.items.map((item, index) => {
               if (typeof item.product === 'object') {
+                let title = item.title || 'No product name'
+
                 const {
                   quantity,
                   product,
                   product: {
-                    title = '',
                     meta: { image: metaImage },
                   },
                 } = item
