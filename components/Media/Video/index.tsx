@@ -5,7 +5,7 @@ import { Props as MediaProps } from '../types'
 import classes from './index.module.scss'
 
 export const Video: React.FC<MediaProps> = props => {
-  const { videoClassName, resource, onClick } = props
+  const { videoClassName, resource, onClick, localAsset } = props
 
   const videoRef = useRef<HTMLVideoElement>(null)
   // const [showFallback] = useState<boolean>()
@@ -34,7 +34,11 @@ export const Video: React.FC<MediaProps> = props => {
         onClick={onClick}
         ref={videoRef}
       >
-        <source src={`${process.env.NEXT_PUBLIC_CMS_URL}/media/${filename}`} />
+        {localAsset && localAsset !== '' ? (
+          <source src={localAsset} />
+        ) : (
+          <source src={`${process.env.NEXT_PUBLIC_CMS_URL}/media/${filename}`} />
+        )}
       </video>
     )
   }
