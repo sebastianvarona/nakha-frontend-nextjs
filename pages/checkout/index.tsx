@@ -108,12 +108,6 @@ const CheckoutPage: React.FC<{
             }}
           >
             <h1 className={classes.title}>Checkout</h1>
-            <p>
-              This is a self-hosted, secure checkout using Stripe&apos;s Payment Element component.
-              Use credit card number <b>4242 4242 4242 4242</b> with any future date and CVC to
-              create a mock purchase. An order will be generated in the CMS and will appear in your
-              account.
-            </p>
             {error && <p>{error}</p>}
             <Grid>
               <Cell cols={6} colsM={12}>
