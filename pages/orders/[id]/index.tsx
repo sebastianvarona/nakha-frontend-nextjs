@@ -113,7 +113,7 @@ const Order: React.FC = () => {
                       </div>
                       <div className={classes.rowContent}>
                         <Link href={`/products/${product.slug}`}>
-                          <h6 className={classes.title}>{title}</h6>
+                          {title && <h6 className={classes.title}>{title}</h6>}
                         </Link>
                         <label>Quantity: {quantity}</label>
                         <label className={classes.price}>

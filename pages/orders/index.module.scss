@@ -30,6 +30,7 @@
   list-style: none;
   li {
     margin-bottom: var(--base);
+    padding: var(--base);
   }
 }
 
@@ -92,5 +93,4 @@
 }
 .secondary {
   background-color: var(--color-base-900);
-  padding: var(--base);
 }
