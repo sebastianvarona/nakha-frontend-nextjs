@@ -19,7 +19,7 @@ export const InfoGrid: React.FC<
         const { title, description, image } = info
         const img = image as Media
         return (
-          <Cell key={index} className={classes.container} cols={3} colsS={6} colsM={12}>
+          <Cell key={index} className={classes.container} cols={3} colsM={6} colsS={12}>
             <div className={classes.imageContainer}>
               <img src={img.url} alt={img.alt} />
             </div>
