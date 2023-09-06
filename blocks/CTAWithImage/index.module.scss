@@ -68,6 +68,7 @@ $spacer-h: calc(var(--block-padding) / 2);
 
   @include small-break {
     height: 50vh;
+    padding: 0 24px;
   }
 }
 

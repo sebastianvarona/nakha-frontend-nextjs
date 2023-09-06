@@ -17,7 +17,7 @@ export const HighImpactHero: React.FC<Page['hero']> = ({ richText, media, links 
 
   return (
     <section className={`${classes.hero} ${isVisible ? classes.visible : ''}`}>
-      <div className={classes.media}>
+      <div id="heroMedia" className={classes.media}>
         {typeof media === 'object' && (
           <Fragment>
             <Media
@@ -31,7 +31,7 @@ export const HighImpactHero: React.FC<Page['hero']> = ({ richText, media, links 
           </Fragment>
         )}
       </div>
-      <div className={classes.overlay} />
+      {/* <div className={classes.overlay} /> */}
       <div className={classes.content}>
         <RichText content={richText} />
         <VerticalPadding>
