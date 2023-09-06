@@ -91,15 +91,10 @@ const Order: React.FC = () => {
             <h4 className={classes.orderTitle}>Items</h4>
             {order.items.map((item, index) => {
               if (typeof item.product === 'object') {
-                let title = item.title || 'No product name'
+                const title = item.title || 'No product name'
+                const metaImage = item?.product?.meta?.image || ''
 
-                const {
-                  quantity,
-                  product,
-                  product: {
-                    meta: { image: metaImage },
-                  },
-                } = item
+                const { quantity, product } = item
 
                 const isLast = index === order.items.length - 1
 
