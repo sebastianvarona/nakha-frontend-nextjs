@@ -23,6 +23,11 @@
 
 .error {
   color: red;
+  .orderId {
+    font-weight: 600;
+    text-decoration: underline;
+    font-size: 2rem;
+  }
 }
 
 .order {

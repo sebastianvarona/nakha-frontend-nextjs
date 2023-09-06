@@ -84,17 +84,26 @@ const Order: React.FC = () => {
       <Gutter className={classes.orders}>
         <h1>Order</h1>
         <p>{`Order ID: ${query.id}`}</p>
-        {error && <div className={classes.error}>{error}</div>}
+        {error && (
+          <div className={classes.error}>
+            Could not load order <span className={classes.orderId}>{query.id}</span>. Please try
+            again.
+          </div>
+        )}
         {loading && <div className={classes.loading}>{`Loading order ${query.id}...`}</div>}
         {order && (
           <div className={classes.order}>
             <h4 className={classes.orderTitle}>Items</h4>
             {order.items.map((item, index) => {
               if (typeof item.product === 'object') {
-                const title = item.title || 'No product name'
-                const metaImage = item?.product?.meta?.image || ''
-
-                const { quantity, product } = item
+                const {
+                  quantity,
+                  product,
+                  product: {
+                    title,
+                    meta: { image: metaImage },
+                  },
+                } = item
 
                 const isLast = index === order.items.length - 1
 
@@ -109,7 +118,7 @@ const Order: React.FC = () => {
                       </div>
                       <div className={classes.rowContent}>
                         <Link href={`/products/${product.slug}`}>
-                          {title && <h6 className={classes.title}>{title}</h6>}
+                          <h6 className={classes.title}>{title}</h6>
                         </Link>
                         <label>Quantity: {quantity}</label>
                         <label className={classes.price}>
