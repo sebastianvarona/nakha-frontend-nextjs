@@ -30,13 +30,17 @@ export const Article: React.FC<{
           <Gutter>
             <h1 className={classes.title}>{title}</h1>
             <div className={classes.mediaContainer}>
-              <div className={classes.mediaWrapper}>
-                <img src={media.url} alt={media.alt} />
-              </div>
+              <Grid>
+                <Cell cols={8} start={3} colsS={12} startS={1}>
+                  <div className={classes.mediaWrapper}>
+                    <img src={media.url} alt={media.alt} />
+                  </div>
+                </Cell>
+              </Grid>
             </div>
 
             <Grid>
-              <Cell cols={8} start={3}>
+              <Cell cols={8} start={3} colsS={12} startS={1}>
                 <RichText content={content} />
               </Cell>
             </Grid>

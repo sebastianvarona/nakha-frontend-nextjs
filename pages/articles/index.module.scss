@@ -1,6 +1,12 @@
+@import '../../css/queries.scss';
+
 .title {
     font-size: var(--small-title-size);
     text-align: center;
+
+    @include extra-small-break {
+        font-size: calc(var(--small-title-size) / 1.5);
+    }
 }
 
 .mediaContainer {
@@ -10,12 +16,12 @@
 .mediaWrapper {
     position: relative;
     width: 100%;
-    aspect-ratio: 16/9;
+    aspect-ratio: 18/9;
     overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
-
+    
     img {
         width: 100%;
         height: 100%;

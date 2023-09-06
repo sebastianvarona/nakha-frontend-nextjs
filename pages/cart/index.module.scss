@@ -48,6 +48,16 @@
   @include small-break {
     max-width: unset;
     margin-bottom: calc(var(--base) / 2);
+    aspect-ratio: 16 / 9;
+    img {
+      object-fit: contain;
+    }
+  }
+  @include extra-small-break {
+    aspect-ratio: 4 / 3;
+    img {
+      object-fit: contain;
+    }
   }
 }
 
@@ -84,6 +94,10 @@
   display: flex;
   align-self: start;
   padding: 0 20px;
+
+  @include small-break {
+    padding: 0 0 20px 0;
+  }
 }
 
 .price{
@@ -91,7 +105,7 @@
   gap: 4px;
 }
 
-.empty {
+.empty, .itemsTotal {
   padding-top: 24px;
 
   @include extra-small-break {
