@@ -95,7 +95,7 @@ const Order: React.FC = () => {
                   quantity,
                   product,
                   product: {
-                    title,
+                    title = '',
                     meta: { image: metaImage },
                   },
                 } = item
