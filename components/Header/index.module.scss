@@ -30,8 +30,22 @@
     margin-left: var(--base);
   }
 
-  @include mid-break {
+  @include small-break {
     display: none;
+    .linkToHide {
+      // Hide
+      display: none;
+    }
+  }
+}
+
+.logo {
+  svg{
+    object-fit: contain;
+    height: 100%;
+  }
+  @include extra-small-break {
+    height: 25px;
   }
 }
 

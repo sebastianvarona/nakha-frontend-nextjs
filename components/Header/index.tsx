@@ -53,13 +53,13 @@ export const Header: React.FC<{ header: HeaderType }> = ({ header }) => {
               })}
             </nav>
 
-            <Link href="/">
+            <Link href="/" className={classes.logo}>
               <Logo color="white" variant="small" />
             </Link>
 
             <nav className={`${classes.nav} ${classes.end}`}>
               {navItems.slice(3).map(({ link }, i) => {
-                return <CMSLink key={i} {...link} />
+                return <CMSLink key={i} className={classes.linkToHide} {...link} />
               })}
               {user && <Link href="/account">Account</Link>}
               {!user && (

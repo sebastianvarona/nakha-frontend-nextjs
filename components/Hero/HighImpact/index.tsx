@@ -31,7 +31,7 @@ export const HighImpactHero: React.FC<Page['hero']> = ({ richText, media, links 
           </Fragment>
         )}
       </div>
-      {/* <div className={classes.overlay} /> */}
+      <div className={classes.overlay} />
       <div className={classes.content}>
         <RichText content={richText} />
         <VerticalPadding>

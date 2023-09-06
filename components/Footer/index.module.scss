@@ -11,12 +11,18 @@
   @include small-break {
     padding-left: var(--base);
     padding-right: var(--base);
+    padding-bottom: calc(var(--base) * 2);
   }
 }
 
 .wrap {
   display: flex;
   justify-content: space-between;
+  @include small-break {
+    flex-direction: column-reverse;
+    align-items: center;
+    gap: var(--base);
+  }
 }
 
 .nav {
@@ -37,6 +43,10 @@
   width: 208px;
   display: flex;
   align-items: flex-end;
+  
+  @include small-break {
+    width: 150px;
+  }
 }
 
 .text {
