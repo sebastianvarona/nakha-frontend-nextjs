@@ -34,11 +34,22 @@ export const Video: React.FC<MediaProps> = props => {
         onClick={onClick}
         ref={videoRef}
       >
-        {localAsset && localAsset !== '' ? (
-          <source src={localAsset} />
-        ) : (
-          <source src={`${process.env.NEXT_PUBLIC_CMS_URL}/media/${filename}`} />
-        )}
+        <source src={`${process.env.NEXT_PUBLIC_CMS_URL}/media/${filename}`} />
+      </video>
+    )
+  } else if (localAsset && localAsset.includes('mp4')) {
+    return (
+      <video
+        playsInline
+        autoPlay
+        muted
+        loop
+        controls={false}
+        className={[classes.video, videoClassName].filter(Boolean).join(' ')}
+        onClick={onClick}
+        ref={videoRef}
+      >
+        <source src={localAsset} />
       </video>
     )
   }
