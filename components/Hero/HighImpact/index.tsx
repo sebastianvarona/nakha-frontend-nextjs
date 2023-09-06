@@ -18,7 +18,7 @@ export const HighImpactHero: React.FC<Page['hero']> = ({ richText, media, links 
   return (
     <section className={`${classes.hero} ${isVisible ? classes.visible : ''}`}>
       <div id="heroMedia" className={classes.media}>
-        {typeof media === 'object' && (
+        {/* {typeof media === 'object' && (
           <Fragment>
             <Media
               resource={media}
@@ -29,7 +29,8 @@ export const HighImpactHero: React.FC<Page['hero']> = ({ richText, media, links 
             />
             {media?.caption && <RichText content={media.caption} className={classes.caption} />}
           </Fragment>
-        )}
+        )} */}
+        <video src="/backgrounds/video_banner.mp4" className={classes.video} autoPlay loop muted />
       </div>
       <div className={classes.overlay} />
       <div className={classes.content}>
