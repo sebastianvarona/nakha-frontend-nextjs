@@ -30,7 +30,9 @@ export const HighImpactHero: React.FC<Page['hero']> = ({ richText, media, links 
             {media?.caption && <RichText content={media.caption} className={classes.caption} />}
           </Fragment>
         )} */}
-        <video src="/backgrounds/video_banner.mp4" className={classes.video} autoPlay loop muted />
+        <video className={classes.video} autoPlay loop muted>
+          <source src="/backgrounds/video_banner.mp4" type="video/mp4" />
+        </video>
       </div>
       <div className={classes.overlay} />
       <div className={classes.content}>
