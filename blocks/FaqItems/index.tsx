@@ -19,7 +19,7 @@ export const FaqItems: React.FC<
     <Gutter>
       <Grid>
         {questions.map((q, i) => (
-          <Cell cols={8} start={3} key={i} className={classes.cell}>
+          <Cell cols={8} start={3} colsS={12} startS={1} key={i} className={classes.cell}>
             <RichText content={q.richText} />
           </Cell>
         ))}

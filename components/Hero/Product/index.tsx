@@ -24,7 +24,21 @@ export const ProductHero: React.FC<{
     <VerticalPadding top="large">
       <Gutter className={classes.productHero}>
         <Grid>
-          <Cell cols={6}>
+          <Cell cols={6} colsS={12}>
+            <div className={classes.mediaContainer}>
+              <div className={classes.mediaWrapper}>
+                {!metaImage && <div className={classes.placeholder}>No image</div>}
+                <div className={classes.overlay} />
+                {metaImage && typeof metaImage !== 'string' && (
+                  <Media imgClassName={classes.image} resource={metaImage} fill />
+                )}
+              </div>
+              {metaImage && typeof metaImage !== 'string' && metaImage?.caption && (
+                <RichText content={metaImage.caption} />
+              )}
+            </div>
+          </Cell>
+          <Cell cols={6} colsS={12}>
             <div className={classes.content}>
               <div className={classes.categories}>
                 {categories?.map((category, index) => {
@@ -51,18 +65,6 @@ export const ProductHero: React.FC<{
                 appearance="primary"
               />
             </div>
-          </Cell>
-          <Cell cols={6}>
-            <div className={classes.mediaWrapper}>
-              {!metaImage && <div className={classes.placeholder}>No image</div>}
-              <div className={classes.overlay} />
-              {metaImage && typeof metaImage !== 'string' && (
-                <Media imgClassName={classes.image} resource={metaImage} fill />
-              )}
-            </div>
-            {metaImage && typeof metaImage !== 'string' && metaImage?.caption && (
-              <RichText content={metaImage.caption} />
-            )}
           </Cell>
         </Grid>
       </Gutter>

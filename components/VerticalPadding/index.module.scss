@@ -1,17 +1,35 @@
+@import '../../css/queries';
+
 .top-large {
   padding-top: var(--block-padding);
+
+  @include small-break {
+    padding-top: calc(var(--block-padding) / 2);
+  }
 }
 
 .top-medium {
   padding-top: calc(var(--block-padding) / 2);
+  
+  @include small-break {
+    padding-top: calc(var(--block-padding) / 4);
+  }
 }
 
 .bottom-large {
   padding-bottom: var(--block-padding);
+
+  @include small-break {
+    padding-bottom: calc(var(--block-padding) / 2);
+  }
 }
 
 .bottom-medium {
   padding-bottom: calc(var(--block-padding) / 2);
+
+  @include small-break {
+    padding-bottom: calc(var(--block-padding) / 4);
+  }
 }
 
 .header {

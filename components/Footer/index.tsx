@@ -5,6 +5,7 @@ import { Footer as FooterType } from '../../payload-types'
 import { Gutter } from '../Gutter'
 import { CMSLink } from '../Link'
 import { Logo } from '../Logo'
+import { VerticalPadding } from '../VerticalPadding/index'
 
 import classes from './index.module.scss'
 

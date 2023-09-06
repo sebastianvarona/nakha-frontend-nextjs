@@ -1,5 +1,14 @@
 @import '../../css/common';
 
+.card {
+  // @include small-break {
+  //   margin: 0 20%;
+  // }
+  // @include extra-small-break {
+  //   margin: 0 0;
+  // }
+}
+
 .link {
   margin: 0;
   font-size: 20px;
@@ -78,17 +87,26 @@
 .mediaProductWrapper {
   aspect-ratio: 5 / 7;
   background-color: var(--color-base-900);
-  
-  @include small-break {
-    margin: 0 20%;
-  }
 
+  @include small-break {
+    aspect-ratio: 16 / 9;
+    img {
+      object-fit: contain;
+    }
+  }
   @include extra-small-break {
-    margin: 0 0;
+    aspect-ratio: 4 / 3;
+    img {
+      object-fit: contain;
+    }
   }
 }
 .mediaArticleWrapper {
   aspect-ratio: 4 / 3;
+
+  @include small-break {
+    aspect-ratio: 16 / 9;
+  }
 }
 
 .image {

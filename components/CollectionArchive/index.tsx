@@ -244,25 +244,21 @@ export const CollectionArchive: React.FC<Props> = props => {
           )}
           {showPageRange !== false && (
             <Gutter>
-              <Grid>
-                <Cell cols={6} colsM={4}>
-                  <div className={classes.pageRange}>
-                    <PageRange
-                      totalDocs={results.totalDocs}
-                      currentPage={results.page}
-                      collection={relationTo}
-                      limit={limit}
-                    />
-                  </div>
-                </Cell>
-              </Grid>
+              <div className={classes.pageRange}>
+                <PageRange
+                  totalDocs={results.totalDocs}
+                  currentPage={results.page}
+                  collection={relationTo}
+                  limit={limit}
+                />
+              </div>
             </Gutter>
           )}
           <Gutter>
             <Grid className={classes.grid}>
               {results.docs?.map((result, index) => {
                 return (
-                  <Cell key={index} className={classes.row} cols={4} colsM={8}>
+                  <Cell key={index} className={classes.row} cols={4} colsS={12}>
                     <Card
                       relationTo={relationTo}
                       doc={result}

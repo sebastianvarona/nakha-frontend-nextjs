@@ -1,12 +1,12 @@
+import React, { Fragment, useEffect, useRef, useState } from 'react'
 import { Cell, Grid } from '@faceless-ui/css-grid'
 import { useRouter } from 'next/router'
-import React, { Fragment, useEffect, useRef, useState } from 'react'
-
-import { Product } from '../../payload-types'
-
 import qs from 'qs'
+
 import { Card } from '../../components/Card'
 import { Gutter } from '../../components/Gutter'
+import { Product } from '../../payload-types'
+
 import classes from './index.module.scss'
 
 type Result = {
@@ -107,7 +107,7 @@ export const RelatedProducts: React.FC<Props> = props => {
               {results.docs?.map((result, index) => {
                 if (result.slug === router.query.slug) return null
                 return (
-                  <Cell key={index} className={classes.row} cols={4} colsM={8}>
+                  <Cell key={index} className={classes.row} cols={4} colsM={12}>
                     <Card relationTo={'products'} doc={result} />
                   </Cell>
                 )

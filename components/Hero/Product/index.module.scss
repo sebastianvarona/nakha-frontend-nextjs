@@ -12,7 +12,11 @@
   align-items: flex-start;
 
   @include mid-break {
-    margin-bottom: var(--base);
+    margin-left: 24px;
+  }
+
+  @include small-break {
+    margin-left: 0;
   }
 }
 
@@ -48,6 +52,17 @@
   }
 }
 
+.mediaContainer{
+  @include mid-break{
+    margin-left: 24px;
+  }
+
+  @include small-break {
+    margin: 0 24px;
+    margin-bottom: 12px;
+  }
+}
+
 .mediaWrapper {
   text-decoration: none;
   display: block;
@@ -65,10 +80,21 @@
     margin-left: calc(var(--gutter-h) * -1);
     width: calc(100% + var(--gutter-h) * 2);
   }
+  @include small-break {
+    aspect-ratio: 16 / 9;
+    margin-bottom: 0;
+  }
+  @include extra-small-break {
+    aspect-ratio: 9 / 9;
+    margin-bottom: 0;
+  }
 }
 
 .image {
   object-fit: cover;
+  @include small-break {
+    object-fit: contain;
+  }
 }
 
 .placeholder {

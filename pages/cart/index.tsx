@@ -35,7 +35,7 @@ const CartPage: React.FC<{
       <Hero {...hero} />
       <Gutter>
         {cartIsEmpty && (
-          <div>
+          <div className={classes.empty}>
             Your cart is empty.
             {typeof shopPage === 'object' && shopPage?.slug && (
               <Fragment>

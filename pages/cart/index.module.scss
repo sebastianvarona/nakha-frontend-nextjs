@@ -90,3 +90,11 @@
   display: flex;
   gap: 4px;
 }
+
+.empty {
+  padding-top: 24px;
+
+  @include extra-small-break {
+    text-align: center;
+  }
+}
