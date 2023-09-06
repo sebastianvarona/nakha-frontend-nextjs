@@ -74,11 +74,14 @@ const Orders: React.FC = () => {
                   <div className={classes.productsRow}>
                     {order.items.map(item => {
                       const product = item.product as Product
-                      const media = product.meta.image as Media
+                      const media = product?.meta?.image as Media
                       return (
                         <div key={item.id} className={classes.item}>
                           <div className={classes.itemName}>{item.title}</div>
-                          <img src={media.url} alt={media.alt} />
+                          {media && media.url && media.alt && (
+                            <img src={media.url} alt={media.alt} />
+                          )}
+                          {!media && <div className={classes.noImage}>No Image</div>}
                           <div className={classes.itemPrice}>x{item.quantity}</div>
                         </div>
                       )

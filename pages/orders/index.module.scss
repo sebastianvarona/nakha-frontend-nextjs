@@ -44,6 +44,16 @@
     font-size: small;
   }
 
+  .noImage {
+    width: 100px;
+    aspect-ratio: 5/7;
+    background-color: var(--color-base-900);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+  }
+
   img {
     width: 100px;
     aspect-ratio: 5/7;
