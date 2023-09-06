@@ -1,38 +1,42 @@
-import React from 'react'
-import { Cell, Grid } from '@faceless-ui/css-grid'
+import React, { useEffect, useState } from 'react'
 
 import { Page } from '../../../payload-types'
-import { Gutter } from '../../Gutter'
 import { CMSLink } from '../../Link'
 import { Media } from '../../Media'
 import RichText from '../../RichText'
+import { VerticalPadding } from '../../VerticalPadding/index'
 
 import classes from './index.module.scss'
 
-export const MediumImpactHero: React.FC<Page['hero']> = props => {
-  const { richText, media, links } = props
+export const MediumImpactHero: React.FC<Page['hero']> = ({ richText, media, links }) => {
+  const [isVisible, setIsVisible] = useState(false)
+
+  useEffect(() => {
+    setIsVisible(true)
+  }, [])
 
   return (
-    <Gutter className={classes.hero}>
-      <Grid>
-        <Cell cols={5} colsM={4}>
-          <RichText className={classes.richText} content={richText} />
-          {Array.isArray(links) && (
+    <section className={`${classes.hero} ${isVisible ? classes.visible : ''}`}>
+      <div id="heroMedia" className={classes.media}>
+        <video src="/backgrounds/video_banner.mp4" className={classes.video} autoPlay loop muted />
+      </div>
+      <div className={classes.overlay} />
+      <div className={classes.content}>
+        <RichText content={richText} />
+        <VerticalPadding>
+          {Array.isArray(links) && links.length > 0 && (
             <ul className={classes.links}>
               {links.map(({ link }, i) => {
                 return (
                   <li key={i}>
-                    <CMSLink className={classes.link} {...link} />
+                    <CMSLink {...link} />
                   </li>
                 )
               })}
             </ul>
           )}
-        </Cell>
-        <Cell cols={7} colsM={4}>
-          {typeof media === 'object' && <Media className={classes.media} resource={media} />}
-        </Cell>
-      </Grid>
-    </Gutter>
+        </VerticalPadding>
+      </div>
+    </section>
   )
 }

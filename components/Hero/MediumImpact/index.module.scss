@@ -1,62 +1,142 @@
-@use '../../../css/common.scss' as *;
+@import '../../../css/queries';
 
 .hero {
-  padding-top: calc(var(--base) * 3);
-
-  @include mid-break {
-    padding-top: var(--base);
-  }
-}
-
-.richText {
+  // padding-top: calc(var(--gutter-h) / 2);
   position: relative;
-
-  &::after {
-    content: '';
-    display: block;
-    position: absolute;
-    width: 100vw;
-    left: calc(var(--gutter-h) * -1);
-    height: 200px;
-    background: linear-gradient(to bottom, var(--color-base-100), transparent);
-    top: calc(100% + (var(--base) * 2));
-    right: 0;
-
-    @include mid-break {
-      display: none;
+  overflow: hidden;
+  height: 100vh;
+  min-height: 656px;
+  opacity: 0;
+  transition: opacity 1s ease;
+  background-color: var(--color-base-1000);
+  h1 {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    padding: 0 20px !important;
+    span{
+      display: block;
+    }
+  }
+  p {
+    opacity: 0;
+    transform: translateY(0px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  a {
+    opacity: 0;
+    transform: translateY(80px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  @include extra-small-break {
+    h1{
+      font-size: 2.5rem;
+    }
+    p {
+      font-size: 1.2rem;
+      padding-bottom: 10px !important;
+    }
+  }
+  @include small-break {
+    h1, p{
+      padding: 0 3rem;
+    }
+  }
+  @include mid-break {
+    min-height: auto;
+    h1, p{
+      padding: 0 3rem;
     }
   }
 }
+.visible {
+  opacity: 1;
+  h1 {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  p {
+    opacity: 1;
+    transform: translateY(40px);
+  }
+  a{
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+
+.media {
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-base-1000);
+  // width: calc(100% + var(--gutter-h));
+  // margin-top: calc(var(--base) * 2);
+  
+  // @include mid-break {
+    //   margin-top: var(--base);
+    //   margin-left: calc(var(--gutter-h) * -1);
+    //   width: calc(100% + var(--gutter-h) * 2);
+    // }
+  }
+  .video{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: relative;
+    background-color: var(--color-base-1000);
+  }
 
 .links {
-  position: relative;
   list-style: none;
   margin: 0;
   padding: 0;
   display: flex;
-  margin-top: calc(var(--base) * 4);
+  padding-top: var(--base);
+  flex-wrap: wrap;
+  margin: calc(var(--base) * -.5);
 
-  li {
-    margin-right: 12px;
-  }
-
-  @include mid-break {
-    display: block;
-    margin-top: var(--base);
-
-    li {
-      margin-right: 0;
-    }
+  & > * {
+    margin: calc(var(--base) / 2);
   }
 }
 
-.link {
+.caption {
+  margin-top: var(--base);
+  @include mid-break {
+    position: relative;
+    left: var(--gutter-h);
+  }
+}
+
+.content {
+  position: absolute;
+  inset: 0;
+  width: 60%;
+  margin: auto;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 3;
+  text-align: center;
+
+  @include large-break {
+    width: 80%;
+  }
+
   @include mid-break {
     width: 100%;
   }
 }
 
-.media {
-  position: relative;
-  width: calc(100% + var(--gutter-h));
+.overlay {
+  background: radial-gradient(circle, rgba(0,0,0,0.05), rgba(0,0,0,0.5), rgba(0,0,0,0.8));
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
 }
