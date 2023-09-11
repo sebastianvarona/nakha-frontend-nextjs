@@ -5,6 +5,18 @@ import { CATEGORIES } from './categories'
 import { FOOTER, HEADER, SETTINGS } from './globals'
 import { META } from './meta'
 
+const VARIANTS = `variants {
+    id
+    name
+  }
+`
+const ATTRIBUTES = `attributes {
+  id
+  name
+  value
+}
+`
+
 export const PRODUCTS = gql`
   query Products {
     Products(limit: 300) {
@@ -21,6 +33,9 @@ export const PRODUCT = gql`
       docs {
         id
         title
+        ${VARIANTS}
+        ${ATTRIBUTES}
+        detail
         ${CATEGORIES}
         layout {
           ${CALL_TO_ACTION}

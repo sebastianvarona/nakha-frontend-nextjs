@@ -1,5 +1,7 @@
 import React, { Fragment } from 'react'
 import { Cell, Grid } from '@faceless-ui/css-grid'
+import { Listbox } from '@headlessui/react'
+import { set } from 'date-fns'
 
 import { Product } from '../../../payload-types'
 import { AddToCartButton } from '../../AddToCartButton'
@@ -17,8 +19,37 @@ export const ProductHero: React.FC<{
   const {
     title,
     categories,
+    variants,
+    attributes,
+    detail,
     meta: { image: metaImage, description },
   } = product
+
+  const [selectedVariant, setSelectedVariant] = React.useState(variants?.[0] || null)
+
+  const [hasDetail, setHasDetail] = React.useState(false)
+  const [hasVariants, setHasVariants] = React.useState(false)
+  const [hasAttributes, setHasAttributes] = React.useState(false)
+
+  React.useEffect(() => {
+    if (detail && detail.length > 0 && detail !== '') {
+      setHasDetail(true)
+    } else {
+      setHasDetail(false)
+    }
+    if (variants && variants.length > 0) {
+      setHasVariants(true)
+      setSelectedVariant(variants[0])
+    } else {
+      setHasVariants(false)
+      setSelectedVariant(null)
+    }
+    if (attributes && attributes.length > 0) {
+      setHasAttributes(true)
+    } else {
+      setHasAttributes(false)
+    }
+  }, [detail, variants, attributes, product])
 
   return (
     <VerticalPadding top="large">
@@ -57,10 +88,49 @@ export const ProductHero: React.FC<{
                 })}
               </div>
               <h1 className={classes.title}>{title}</h1>
-              {description && <p className={classes.description}>{description}</p>}
+              {hasDetail && <p className={classes.detail}>{detail}</p>}
+              {!hasDetail && description && <p className={classes.description}>{description}</p>}
+              {hasAttributes && (
+                <ul className={classes.attributes}>
+                  {attributes?.map(attribute => {
+                    const { id, name, value } = attribute
+                    return (
+                      <li key={id} className={classes.attribute}>
+                        <strong>{name}:</strong> {value}
+                      </li>
+                    )
+                  })}
+                </ul>
+              )}
+
+              {hasVariants && (
+                <div className={classes.variant}>
+                  <h5 className={classes.variantTitle}>Variant:</h5>
+                  <div className={classes.selectParent}>
+                    <select
+                      className={classes.select}
+                      onChange={e => {
+                        const selected = variants?.find(variant => variant.name === e.target.value)
+                        setSelectedVariant(selected)
+                      }}
+                    >
+                      {variants?.map(variant => {
+                        const { id, name } = variant
+                        return (
+                          <option key={id} value={name}>
+                            {name}
+                          </option>
+                        )
+                      })}
+                    </select>
+                  </div>
+                </div>
+              )}
+
               <Price product={product} button={false} />
               <AddToCartButton
                 product={product}
+                variant={selectedVariant?.name}
                 className={classes.addToCartButton}
                 appearance="primary"
               />

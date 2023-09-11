@@ -32,6 +32,7 @@ export interface User {
   cart?: {
     items?: {
       product?: string | Product;
+      variant?: string;
       quantity?: number;
       id?: string;
     }[];
@@ -51,6 +52,16 @@ export interface User {
 export interface Product {
   id: string;
   title: string;
+  detail?: string;
+  variants?: {
+    name: string;
+    id?: string;
+  }[];
+  attributes?: {
+    name: string;
+    value: string;
+    id?: string;
+  }[];
   publishedDate?: string;
   layout: (
     | {
@@ -276,7 +287,7 @@ export interface Page {
       };
       id?: string;
     }[];
-    media: string | Media;
+    media?: string | Media;
   };
   layout: (
     | {
@@ -672,18 +683,23 @@ export interface Order {
     user?: string | User;
     name?: string;
     email?: string;
-    stripeCustomerID?: string;
+    address?: string;
+    address2?: string;
+    city?: string;
+    state?: string;
+    zip?: string;
   };
   items?: {
     product?: string | Product;
-    title?: string;
-    priceJSON?: string;
-    stripeProductID?: string;
+    price?: number;
     quantity?: number;
+    variant?: string;
     id?: string;
   }[];
   stripeInvoiceID?: string;
   stripePaymentIntentID?: string;
+  status: 'unpaid' | 'paid' | 'shipped' | 'refunded';
+  total?: number;
   updatedAt: string;
   createdAt: string;
 }

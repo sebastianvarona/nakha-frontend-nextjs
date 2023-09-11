@@ -38,6 +38,9 @@ const CheckoutPage: React.FC<{
 
   const { cart, cartIsEmpty, cartTotal } = useCart()
 
+  // Enable the skeleton loader UI for the optimal loading experience.
+  const loader = 'auto'
+
   useEffect(() => {
     if (user === null) {
       router.push('/account/login?unauthorized=account')
@@ -105,6 +108,7 @@ const CheckoutPage: React.FC<{
                   focusBoxShadow: '',
                 },
               },
+              loader,
             }}
           >
             <h1 className={classes.title}>Checkout</h1>
@@ -130,6 +134,7 @@ const CheckoutPage: React.FC<{
                       if (typeof item.product === 'object') {
                         const {
                           quantity,
+                          variant,
                           product,
                           product: {
                             title,
@@ -157,6 +162,9 @@ const CheckoutPage: React.FC<{
                                 <label>
                                   Quantity &nbsp;
                                   <span className={classes.quantity}>{quantity}</span>
+                                </label>
+                                <label className={classes.variant}>
+                                  Variant: {variant || 'Default'}
                                 </label>
                                 <label className={classes.price}>
                                   Price: <Price product={product} button={false} />

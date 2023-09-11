@@ -9,18 +9,19 @@ import classes from './index.module.scss'
 export const AddToCartButton: React.FC<{
   product: Product
   quantity?: number
+  variant?: string
   className?: string
   appearance?: Props['appearance']
 }> = props => {
-  const { product, quantity = 1, className, appearance = 'primary' } = props
+  const { product, quantity = 1, variant, className, appearance = 'primary' } = props
 
   const { cart, addItemToCart, isProductInCart } = useCart()
 
   const [showInCart, setShowInCart] = useState<boolean>()
 
   useEffect(() => {
-    setShowInCart(isProductInCart(product))
-  }, [isProductInCart, product, cart])
+    setShowInCart(isProductInCart(product, variant))
+  }, [isProductInCart, product, cart, variant])
 
   if (showInCart) {
     return (
@@ -42,6 +43,7 @@ export const AddToCartButton: React.FC<{
         addItemToCart({
           product,
           quantity,
+          variant,
         })
       }}
       className={[className, classes.addToCartButton].filter(Boolean).join(' ')}

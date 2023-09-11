@@ -1,40 +1,56 @@
-import { Product, User } from "../../payload-types";
+import type { Product, User } from '../../payload-types'
 
-type CartType = User['cart'];
+type CartType = User['cart']
 
-export type CartItem = User['cart']['items'][0];
+export type CartItem = User['cart']['items'][0]
 
-type CartAction = {
-  type: 'SET_CART';
-  payload: CartType;
-} | {
-  type: 'MERGE_CART';
-  payload: CartType;
-} | {
-  type: 'ADD_ITEM';
-  payload: CartItem;
-} | {
-  type: 'DELETE_ITEM';
-  payload: Product;
-} | {
-  type: 'CLEAR_CART';
-};
+function findIdIndex(arr: any[], item): number {
+  const productId = typeof item.product === 'string' ? item.product : item.product.id
+  const variantId = item.variant
+  return arr.findIndex(({ product, variant }) => {
+    const accProductId = typeof product === 'string' ? product : product.id
+    console.log({ accProductId, productId, variant, variantId })
+    return accProductId === productId && variant === variantId
+  })
+}
+
+type CartAction =
+  | {
+      type: 'SET_CART'
+      payload: CartType
+    }
+  | {
+      type: 'MERGE_CART'
+      payload: CartType
+    }
+  | {
+      type: 'ADD_ITEM'
+      payload: CartItem
+    }
+  | {
+      type: 'DELETE_ITEM'
+      payload: CartItem
+    }
+  | {
+      type: 'CLEAR_CART'
+    }
 
 export const cartReducer = (cart: CartType, action: CartAction) => {
   switch (action.type) {
     case 'SET_CART': {
-      return action.payload;
+      return action.payload
     }
     case 'MERGE_CART': {
-      const { payload: incomingCart } = action;
+      const { payload: incomingCart } = action
 
       const syncedItems: CartItem[] = [
-        ...cart?.items || [],
-        ...incomingCart?.items || []
+        ...(cart?.items || []),
+        ...(incomingCart?.items || []),
       ].reduce((acc, item) => {
         // remove duplicates
-        const productId = typeof item.product === 'string' ? item.product : item.product.id;
-        const indexInAcc = acc.findIndex(({ product }) => typeof product === 'string' ? product === productId : product.id === productId);
+
+        const indexInAcc = findIdIndex(acc, item)
+
         if (indexInAcc > -1) {
           acc[indexInAcc] = {
             ...acc[indexInAcc],
@@ -44,23 +60,24 @@ export const cartReducer = (cart: CartType, action: CartAction) => {
         } else {
           acc.push(item)
         }
-        return acc;
+        return acc
       }, [])
 
       return {
         ...cart,
         items: syncedItems,
-      };
+      }
     }
     case 'ADD_ITEM': {
       // if the item is already in the cart, increase the quantity
-      const { payload: incomingItem } = action;
-      const productId = typeof incomingItem.product === 'string' ? incomingItem.product : incomingItem.product.id;
-      const indexInCart = cart.items.findIndex(({ product }) => typeof product === 'string' ? product === productId : product.id === productId);
-      let withAddedItem = [...cart?.items || []];
+      const { payload: incomingItem } = action
+
+      const indexInCart = findIdIndex(cart.items, incomingItem)
+
+      let withAddedItem = [...(cart?.items || [])]
 
       if (indexInCart === -1) {
-        withAddedItem.push(incomingItem);
+        withAddedItem.push(incomingItem)
       }
 
       if (indexInCart > -1) {
@@ -73,14 +90,29 @@ export const cartReducer = (cart: CartType, action: CartAction) => {
       return {
         ...cart,
         items: withAddedItem,
-      };
+      }
     }
     case 'DELETE_ITEM': {
-      const { payload: incomingProduct } = action;
-      const withDeletedItem = { ...cart };
-      const indexInCart = cart.items.findIndex(({ product }) => typeof product === 'string' ? product === incomingProduct.id : product.id === incomingProduct.id);
+      const { payload: incomingItem } = action
+      const withDeletedItem = { ...cart }
+
+      const indexInCart = findIdIndex(cart.items, incomingItem)
+
+      // const indexInCart = cart.items.findIndex(({ product, variant }) => {
+      //   const productMatches =
+      //     typeof product === 'string'
+      //       ? product === incomingProduct.product
+      //       : product.id === incomingProduct.product.id
+      //   const variantMatches = variant === incomingProduct.variant
+      //   // const variantMatches = true
+
+      //   console.log({ productMatches, variantMatches })
+
+      //   return productMatches && variantMatches
+      // })
+
       if (indexInCart > -1) withDeletedItem.items.splice(indexInCart, 1)
-      return withDeletedItem;
+      return withDeletedItem
     }
     case 'CLEAR_CART': {
       return {
@@ -89,7 +121,7 @@ export const cartReducer = (cart: CartType, action: CartAction) => {
       }
     }
     default: {
-      return cart;
+      return cart
     }
   }
 }

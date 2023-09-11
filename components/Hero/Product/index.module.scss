@@ -31,7 +31,6 @@
 
 .title {
   margin: 0;
-  margin-bottom: var(--base);
   text-transform: capitalize;
   font-size: 2.5rem;
   line-height: 1.2;
@@ -120,4 +119,40 @@
   background-color: rgba($color: #000000, $alpha: 0.5);
   position: absolute;
   inset: 0;
+}
+
+.attributes {
+  font-size: medium;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: var(--base);
+  padding-left: 8px;
+}
+
+.variant {
+  display: flex;
+  gap: var(--base);
+  align-items: center;
+  margin-bottom: var(--base);
+  .variantTitle {
+    margin: 0;
+  }
+  .selectParent {
+    overflow:hidden;   
+    background-color: rgba(255, 255, 255, 0.15);
+    padding-right: 8px;
+  
+    .select {
+      display: block;
+      width: 100%;
+      background-color: transparent;
+      color: var(--color-base-0);
+      padding: 12px 10px 12px 12px; /* Add right padding */
+      border: none; 
+      outline: none;
+      // appearance: none; 
+      // -webkit-appearance: none;
+      // -moz-appearance: none; 
+    }
+  }
 }

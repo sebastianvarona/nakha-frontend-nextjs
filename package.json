@@ -12,6 +12,7 @@
     "@apollo/client": "^3.7.0",
     "@faceless-ui/css-grid": "^1.2.0",
     "@faceless-ui/modal": "^2.0.1",
+    "@headlessui/react": "^1.7.17",
     "@stripe/react-stripe-js": "^1.16.3",
     "@stripe/stripe-js": "^1.46.0",
     "apollo-link-http": "^1.5.17",

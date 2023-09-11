@@ -1,15 +1,24 @@
 import React, { useCallback } from 'react'
-import { PaymentElement, useElements, useStripe } from '@stripe/react-stripe-js'
+import {
+  AddressElement,
+  LinkAuthenticationElement,
+  PaymentElement,
+  useElements,
+  useStripe,
+} from '@stripe/react-stripe-js'
 
+import { useAuth } from '../../providers/Auth'
 import { Button } from '../Button'
 
 import classes from './index.module.scss'
 
-export const CheckoutForm: React.FC<{}> = () => {
+export const CheckoutForm: React.FC = () => {
   const stripe = useStripe()
   const elements = useElements()
   const [error, setError] = React.useState(null)
   const [isLoading, setIsLoading] = React.useState(false)
+
+  const { user } = useAuth()
 
   const handleSubmit = useCallback(
     async e => {
@@ -52,7 +61,40 @@ export const CheckoutForm: React.FC<{}> = () => {
   return (
     <form onSubmit={handleSubmit}>
       {error && <div className={classes.error}>{error}</div>}
-      <PaymentElement />
+      <LinkAuthenticationElement
+        options={{
+          defaultValues: {
+            email: user.email || '',
+          },
+        }}
+      />
+      <div className={classes.divider} />
+      <h3>Shipping</h3>
+      <AddressElement
+        options={{
+          mode: 'shipping',
+          allowedCountries: ['US'],
+          defaultValues: {
+            name: user.name,
+            // phone: user.phone,
+          },
+        }}
+      />
+      <div className={classes.divider} />
+      <h3>Payment</h3>
+      <PaymentElement
+        options={{
+          defaultValues: {
+            billingDetails: {
+              name: user.name,
+              // phone: user.phone,
+              address: {
+                country: 'US',
+              },
+            },
+          },
+        }}
+      />
       <Button
         className={classes.checkoutButton}
         label={isLoading ? 'Loading...' : 'Checkout'}

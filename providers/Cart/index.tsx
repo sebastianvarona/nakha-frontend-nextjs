@@ -7,6 +7,7 @@ import {
   useRef,
   useState,
 } from 'react'
+
 import { Product, User } from '../../payload-types'
 import { useAuth } from '../Auth'
 import { CartItem, cartReducer } from './reducer'
@@ -15,10 +16,10 @@ import { CartItem, cartReducer } from './reducer'
 export type CartContext = {
   cart: User['cart']
   addItemToCart: (item: CartItem) => void
-  deleteItemFromCart: (product: Product) => void
+  deleteItemFromCart: (item: CartItem) => void
   cartIsEmpty: boolean | undefined
   clearCart: () => void
-  isProductInCart: (product: Product) => boolean
+  isProductInCart: (product: Product, variant?: string) => boolean
   cartTotal: {
     formatted: string
     raw: number
@@ -70,7 +71,7 @@ export const CartProvider = props => {
           const parsedCart = JSON.parse(localCart)
           if (parsedCart.items && parsedCart.items.length > 0) {
             const initialCart = await Promise.all(
-              parsedCart.items.map(async ({ product, quantity }) => {
+              parsedCart.items.map(async ({ product, quantity, variant }) => {
                 const res = await fetch(
                   `${process.env.NEXT_PUBLIC_CMS_URL}/api/products/${product}`,
                 )
@@ -78,6 +79,7 @@ export const CartProvider = props => {
                 return {
                   product: data,
                   quantity,
+                  variant,
                 }
               }),
             )
@@ -161,16 +163,19 @@ export const CartProvider = props => {
   }, [user, cart])
 
   const isProductInCart = useCallback(
-    (incomingProduct: Product): boolean => {
+    (incomingProduct: Product, variant?: string): boolean => {
       let isInCart = false
       const { items: itemsInCart } = cart
       if (Array.isArray(itemsInCart) && itemsInCart.length > 0) {
         isInCart = Boolean(
-          itemsInCart.find(({ product }) =>
-            typeof product === 'string'
-              ? product === incomingProduct.id
-              : product.id === incomingProduct.id,
-          ),
+          itemsInCart.find(({ product, variant: v }) => {
+            const productMatches =
+              typeof product === 'string'
+                ? product === incomingProduct.id
+                : product.id === incomingProduct.id
+            const variantMatches = variant ? variant === v : true
+            return productMatches && variantMatches
+          }),
         )
       }
       return isInCart
@@ -186,10 +191,10 @@ export const CartProvider = props => {
     })
   }, [])
 
-  const deleteItemFromCart = useCallback((incomingProduct: Product) => {
+  const deleteItemFromCart = useCallback(incomingItem => {
     dispatchCart({
       type: 'DELETE_ITEM',
-      payload: incomingProduct,
+      payload: incomingItem,
     })
   }, [])
 

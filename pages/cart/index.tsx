@@ -71,6 +71,7 @@ const CartPage: React.FC<{
               if (typeof item.product === 'object') {
                 const {
                   quantity,
+                  variant,
                   product,
                   product: {
                     title,
@@ -84,7 +85,7 @@ const CartPage: React.FC<{
                   <Fragment key={index}>
                     <div className={classes.row}>
                       <div className={classes.removeButton}>
-                        <RemoveFromCartButton product={product} />
+                        <RemoveFromCartButton product={product} variant={variant} />
                       </div>
                       <div className={classes.mediaWrapper}>
                         {!metaImage && <span className={classes.placeholder}>No image</span>}
@@ -105,11 +106,13 @@ const CartPage: React.FC<{
                             onChange={e => {
                               addItemToCart({
                                 product,
+                                variant,
                                 quantity: Number(e.target.value),
                               })
                             }}
                           />
                         </label>
+                        <label className={classes.variant}>Variant: {variant || 'Default'}</label>
                         <label className={classes.price}>
                           Price: <Price product={product} button={false} />
                         </label>

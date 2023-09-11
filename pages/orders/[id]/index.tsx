@@ -99,6 +99,7 @@ const Order: React.FC = () => {
                 const {
                   quantity,
                   product,
+                  variant,
                   product: {
                     title,
                     meta: { image: metaImage },
@@ -120,6 +121,8 @@ const Order: React.FC = () => {
                         <Link href={`/products/${product.slug}`}>
                           <h6 className={classes.title}>{title}</h6>
                         </Link>
+                        <label className={classes.variant}>Variant: {variant || 'Default'}</label>
+
                         <label>Quantity: {quantity}</label>
                         <label className={classes.price}>
                           Price: <Price product={product} button={false} />

@@ -10,5 +10,6 @@ export const CART = `cart {
       ${META}
     }
     quantity
+    variant
   }
 }`
