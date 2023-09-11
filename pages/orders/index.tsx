@@ -77,7 +77,7 @@ const Orders: React.FC = () => {
                       const media = product?.meta?.image as Media
                       return (
                         <div key={item.id} className={classes.item}>
-                          <div className={classes.itemName}>{item.title}</div>
+                          <div className={classes.itemName}>{(item.product as Product).title}</div>
                           {media?.url && <img src={media.url} alt={`${media.alt}`} />}
                           {!media?.url && <div className={classes.noImage}>No Image</div>}
                           <div className={classes.itemPrice}>x{item.quantity}</div>
